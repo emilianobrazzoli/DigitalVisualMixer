@@ -26,6 +26,7 @@ modulateRotate() is similar to .rotate(), but it allows you to apply different a
 shape indica i lati, quanto è largo e quanto sfumare i bordi
 https://hydra.ojack.xyz/api/
 */
+/*
 var hydra = new Hydra({ detectAudio: true});
 s0.initCam() ; //loads a camera 
     
@@ -39,4 +40,35 @@ s0.initCam() ; //loads a camera
     .scale(0.9).modulate(src(s0))
     .out(o0);
     
-render(o0)  // show only output o2
+render(o0) */
+ // show only output o2
+
+
+//INIT SOCKET
+var socket = io(); 
+var channel =  null; //default
+var toload = null; //default
+
+var loadChannel = function(){
+
+}
+
+//SET SOCKET EVENT
+socket.on('get_channel', function(variable) {
+    channel = variable; 
+});
+
+socket.on('get_toload', function(variable) {
+    toload = variable; 
+    if(toload){
+        loadChannel();
+    }
+});
+
+var init = function(){
+    //SET SOCKET CONNECTION
+    socket.on('connect', function() { 
+    }); 
+}
+
+init();

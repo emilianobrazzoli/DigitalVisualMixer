@@ -56,6 +56,31 @@ filesJs.forEach(file => {
 
 const http = require('http').Server(app); 
 
+
+//START LISTENING FOR CHANNEL CHANGE
+const io = require('socket.io')(http); 
+ 
+var channel =  1; //default
+var toload = true; //default
+
+// handle incoming connections from clients
+io.sockets.on('connection', function(socket) {
+    console.log("sto connettendo");
+ 
+    io.sockets.emit("get_channel", channel);  
+
+    io.sockets.emit("get_toload", toload);  
+
+    socket.on('set_channel', function(variable) {
+        channel = variable;
+    });
+
+    socket.on('set_toload', function(variable) {
+        toload = variable;
+    });
+     
+});  
+
 //ASCOLTA LA PORTA localhost per dire che il progetto è attivo
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
