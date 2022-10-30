@@ -4,12 +4,28 @@ allImages.forEach((value)=>{
         e.preventDefault();
     }
 })*/ 
-// create a new hydra-synth instance  
-/*import { Hydra } from './src/resource/js/hydra-synth.js';
-const hydra = new Hydra({ detectAudio: false })
-osc(4, 0.1, 1.2).out() */
 
-
+/*
+osc() oscilla su tre valori: primo indica larghezza (più è piccolo più la banda è grande), velocità (negativo per andare a sinistra), colore (colori bande)
+rotate() ruota su due valori (il primo è di quanto ruota, il secondo è quanto veloce)
+repeat() su due valori, il primo è le colonne e la seconda sono le righe
+kaleid() caleido su un valore che ne indica i punti del poligono (minimo 2 per un rettangolo)
+noise() ruomore (bolle) su due valori, uno indica quanto sono piccoli e il secondo quanto sono veloci
+scrollX da dove parte, quanto veloce
+scrollY da dove parte, quanto veloce
+scroll da dove parte x,y, quanto veloce x,y
+colorama indica quanto colorizzare
+out() butta fuori il risultato
+s0.initCam() initialize webcam as external source 's0'
+src(s0).out() use external source 's0' inside Hydra
+color tre valori RGB
+render(o2)  // show only output o2
+blend() combines the colors from two sources to create a third source. il secondo valore aumenta il colore di differenza
+modulate() does not change color or luminosity but distorts one visual source using another visual source.
+modulateRotate() is similar to .rotate(), but it allows you to apply different amounts of rotation to different parts of the visual source
+shape indica i lati, quanto è largo e quanto sfumare i bordi
+https://hydra.ojack.xyz/api/
+*/
 var hydra = new Hydra({ detectAudio: true});
 s0.initCam() ; //loads a camera 
     
@@ -22,3 +38,5 @@ s0.initCam() ; //loads a camera
     .modulate(o0, 0.9).modulate(src(s0))
     .scale(0.9).modulate(src(s0))
     .out(o0);
+    
+render(o0)  // show only output o2

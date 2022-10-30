@@ -13,15 +13,21 @@ var port = process.env.PORT || 8080;
 var token = process.env.TOKEN || '';
 
 app.use(express.static(__dirname + '/dist/'));
-app.use('/src/assets', express.static(__dirname + '/src/assets/'));
 
+//LOAD ASSETS
+app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
+
+//LOAD HOMEPAGE ON MAIN LOCALHOST:8080
 app.get("/", (request, response) => { 
-    response.sendFile('home.html' , { root: './src/resource/html/' })
+    response.sendFile('home.html' , { root: './src/resource/html/' }) 
 });  
+
+//LOAD FAVICON
 app.get("/favicon.ico", (request, response) => { 
     response.sendFile('favicon.ico' , { root: './src/resource/' })
 });  
 
+//LOAD ALL HTML AND EXPOSE IT
 var files = fs.readdirSync('./src/resource/html/');
 files.forEach(file => { 
     var streetaddress= file.substr(0, file.indexOf('.')); 
@@ -29,6 +35,8 @@ files.forEach(file => {
         response.sendFile(file , { root: './src/resource/html/' }) 
     });  
 });
+
+//LOAD ALL CSS AND EXPOSE IT
 var filesCss = fs.readdirSync('./src/resource/css/');
 filesCss.forEach(file => {  
     console.log("/src/resource/css/"+file);
@@ -36,6 +44,8 @@ filesCss.forEach(file => {
         response.sendFile(file , { root: './src/resource/css/' }) 
     });  
 });
+
+//LOAD ALL JS AND EXPOSE IT
 var filesJs = fs.readdirSync('./src/resource/js/');
 filesJs.forEach(file => {  
     console.log("/src/resource/js/"+file);
@@ -43,18 +53,10 @@ filesJs.forEach(file => {
         response.sendFile(file , { root: './src/resource/js/' }) 
     });  
 });
-var filesHome = fs.readdirSync('./src/resource/home');
-filesHome.forEach(file => {  
-    console.log("/src/resource/html/home/"+file);
-    app.get("/src/resource/html/home/"+file, (request, response) => { 
-        response.sendFile(file , { root: './src/resource/home/' }) 
-    });  
-});
- 
 
-   
 const http = require('http').Server(app); 
-  
+
+//ASCOLTA LA PORTA localhost per dire che il progetto è attivo
 http.listen(port, () => {
   console.log(`Socket.IO server running at http://localhost:${port}/`);
 });
