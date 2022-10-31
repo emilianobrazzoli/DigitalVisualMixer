@@ -1,18 +1,60 @@
 /** MAIN */ 
- 
-const express = require('express'); 
+  
+import express from 'express';
+import fs from 'fs';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+/*
+const http = require('http').Server(app); 
+const io = require('socket.io')(http); 
+*/
+import { createServer } from "http";
+import { Server } from "socket.io";
 const app = express();  
-var fs = require('fs');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const http = createServer(app);
+const io = new Server(http);
 
 //INIT .ENV VAR
 if(!process || !process.env || !process.env.TOKEN){
-    require('dotenv').config();
+    dotenv.config();
 }
 
 var port = process.env.PORT || 8080;
 var token = process.env.TOKEN || '';
 
 app.use(express.static(__dirname + '/dist/'));
+
+//LOAD MODULE                                         node_modules\@codemirror\view\dist 
+/*app.get("/scripts/commands/index.js", (request, response) => { 
+    response.sendFile('index.js' , { root: './node_modules/@codemirror/commands/dist/' }) 
+});  
+app.get("/scripts/view/index.js", (request, response) => { 
+    response.sendFile('index.js' , { root: './node_modules/@codemirror/view/dist/' }) 
+});  */
+
+/*
+<script src="lib/codemirror.js"></script>
+<link rel="stylesheet" href="lib/codemirror.css">
+<script src="mode/javascript/javascript.js"></script>
+node_modules\codemirror */
+
+app.get("/mode/javascript/javascript.js", (request, response) => { 
+    response.sendFile('javascript.js' , { root: './node_modules/codemirror/mode/javascript/' }) 
+});  
+app.get("/lib/codemirror.css", (request, response) => { 
+    response.sendFile('codemirror.css' , { root: './node_modules/codemirror/lib/' }) 
+});  
+app.get("/lib/codemirror.js", (request, response) => { 
+    response.sendFile('codemirror.js' , { root: './node_modules/codemirror/lib/' }) 
+});  
+app.get("/dist/bootstrap.min.css", (request, response) => { 
+    response.sendFile('bootstrap.min.css' , { root: './node_modules/bootstrap/dist/css/' }) 
+});  
+
+
 
 //LOAD ASSETS
 app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
@@ -54,12 +96,10 @@ filesJs.forEach(file => {
     });  
 });
 
-const http = require('http').Server(app); 
+ 
 
 
 //START LISTENING FOR CHANNEL CHANGE
-const io = require('socket.io')(http); 
- 
 var channel =  1; //default
 var toload = true; //default
 

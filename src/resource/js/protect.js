@@ -27,7 +27,6 @@ shape indica i lati, quanto è largo e quanto sfumare i bordi
 https://hydra.ojack.xyz/api/
 */
 /*
-var hydra = new Hydra({ detectAudio: true});
 s0.initCam() ; //loads a camera 
     
     osc(5, 0.9, 0.001)
@@ -45,12 +44,17 @@ render(o0) */
 
 
 //INIT SOCKET
+
 var socket = io(); 
 var channel =  null; //default
 var toload = null; //default
+var hydra = new Hydra({ detectAudio: true});
+var cam = s0;
+cam.initCam() ;
 
 var loadChannel = function(){
-
+    if(channel===1){  
+    }
 }
 
 //SET SOCKET EVENT
