@@ -15,8 +15,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="lib/codemirror.js"></script>
     <script src="mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="/lib/codemirror.css">
+    <link rel="stylesheet" href="/theme/dracula.css">
     <link rel="stylesheet" href="/dist/bootstrap.min.css">
-    <link rel="stylesheet" href="lib/codemirror.css">
 
     <script src="./src/resource/js/mixer.js" defer></script>
     <link rel="stylesheet" href="./src/resource/css/basic.css">
@@ -37,46 +38,97 @@
 <body style="margin: 0;">
 
     <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="row">
-                <div class="side col-md-8">
-                    <textarea id="codejs">
-                    osc(5, 0.9, 0.001)
-                    .kaleid([3,4,5,7,8,9,10].fast(0.1))
-                    .color(0.5, 0.3)
-                    .colorama(0.6).modulate(src(s0))
-                    .rotate(0.009,()=>Math.sin(time)* -0.02 )
-                    .modulateRotate(o0,()=>Math.sin(time) * 0.003)
-                    .modulate(o0, 0.9).modulate(src(s0))
-                    .scale(0.9).modulate(src(s0))
-                    .out(o0);
-                    render(o0)
+            <div class=" col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <textarea id="codejs">
+        
+                        </textarea>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="prev" onclick="selectActionExec('prev')" class="btn btn-primary">Show</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
 
-                    </textarea>
+                <div class="row">
+                    <div class=" col-12">
+                        <canvas id="hydra-canvas" style="
+                        width: 100%;
+                        height: 100%;  
+                        aspect-ratio: auto 100 / 80;"> </canvas>
+
+                    </div>
+                    
                 </div>
-                <div class="side col-md-4">
-                    <canvas id="hydra-canvas" style="
-                    width: 100%;
-                    height: 100%;  
-                    aspect-ratio: auto 100 / 80;"> </canvas>
-                </div>
-            </div>
-            <div class="row">
-                <div class="side col-md-12">
-                    <div style="text-align:center" class="side col-md-4">
-                        <button style="width:90%" id="run" class="btn btn-primary"> Anteprima </button>
+                <div class="row">
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="0" onclick="selectChannelLoad('0')" class="btn btn-primary">0</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="1" onclick="selectChannelLoad('1')" class="btn btn-primary">1</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="2" onclick="selectChannelLoad('2')" class="btn btn-primary">2</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="3" onclick="selectChannelLoad('3')" class="btn btn-primary">3</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="4" onclick="selectChannelLoad('4')" class="btn btn-primary">4</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="5" onclick="selectChannelLoad('5')" class="btn btn-primary">5</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="6" onclick="selectChannelLoad('6')" class="btn btn-primary">6</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="7" onclick="selectChannelLoad('7')" class="btn btn-primary">7</button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="side col-md-12">
-                    <div style="text-align:center" class="side col-md-4">
-                        <button style="width:90%" id="save" class="btn btn-primary"> Salva </button>
+                <div class="row">
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="save" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
+                    </div> 
+                    <div style="text-align:center" class=" col-6">
+                        <button style="width:90%" id="saverun" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
                     </div>
                 </div>
+                <!--
+                <div class="row">
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="prev" onclick="selectAction('prev')" class="btn btn-primary">Prev</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="save" onclick="selectAction('save')" class="btn btn-primary">Save</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="run" onclick="selectAction('run')" class="btn btn-primary">Run</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="load" onclick="selectAction('load')" class="btn btn-primary">load</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="text-align:center" class=" col-6">
+                        <button style="width:90%" id="loadprev" onclick="selectAction('loadprev')" class="btn btn-primary">Load and Prev</button>
+                    </div> 
+                    <div style="text-align:center" class=" col-6">
+                        <button style="width:90%" id="saverun" onclick="selectAction('saverun')" class="btn btn-primary">Save and Run</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div style="text-align:center" class=" col-4">
+                        <button style="width:90%" id="exec"  onclick="exec()" class="btn btn-primary">Exec</button>
+                    </div>
+                </div>
+            -->
             </div>
-        </div>
+        </div> 
     </div>
     <script id="script" type="text/javascript">
 

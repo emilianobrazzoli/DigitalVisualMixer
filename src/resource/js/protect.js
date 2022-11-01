@@ -25,12 +25,8 @@ https://hydra.ojack.xyz/api/
 
 var socket = io(); 
 var channel =  null; //default
-var toload = true; //default  
+var toload = null; //default  
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
-
-/*
-var cam = s0;
-cam.initCam();*/
 
 var loadChannel = function(){ 
     if(channel!==null && toload){
@@ -45,19 +41,22 @@ var loadChannel = function(){
     }
 }
 
-//SET INIT SOCKET EVENT
-socket.emit('set_toload', true);
+//SET SOCKET EVENT
 
 socket.on('get_channel', function(variable) {
     channel = variable; 
-});
-
-socket.on('get_toload', function(variable) {
-    toload = variable; 
     loadChannel();
 });
 
-//SET CHANGE SOCKET EVENT
+socket.on('get_toload', function(variable) {
+    if(toload === null){
+        toload = true;
+    }else{
+        toload = variable; 
+    }
+    loadChannel();
+});
+
 socket.on('set_channel', function(variable) {
     channel = variable; 
     loadChannel(); 
@@ -67,9 +66,7 @@ socket.on('set_toload', function(variable) {
     toload = variable;  
     loadChannel(); 
 });
-
-//SET INIT SOCKET EVENT
-
+ 
 var init = function(){
     //START SOCKET CONNECTION
     socket.on('connect', function() { 
@@ -78,3 +75,4 @@ var init = function(){
 }
 
 init();
+ 

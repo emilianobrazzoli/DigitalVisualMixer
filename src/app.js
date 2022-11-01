@@ -37,6 +37,17 @@ app.get("/lib/codemirror.js", (request, response) => {
 app.get("/dist/bootstrap.min.css", (request, response) => { 
     response.sendFile('bootstrap.min.css' , { root: './node_modules/bootstrap/dist/css/' }) 
 });  
+app.get("/dist/bootstrap.min.css.map", (request, response) => { 
+    response.sendFile('bootstrap.min.css.map' , { root: './node_modules/bootstrap/dist/css/' }) 
+});  
+
+var themeCss = fs.readdirSync('./node_modules/codemirror/theme');
+themeCss.forEach(file => {   
+    app.get("/theme/"+file, (request, response) => { 
+        response.sendFile(file , { root: './node_modules/codemirror/theme/' }) 
+    });  
+});
+
 
 //LOAD ASSETS
 app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
@@ -92,7 +103,7 @@ io.sockets.on('connection', function(socket) {
 
     //set the channel in charge
     socket.on('set_channel', function(variable) {
-        console.log("app: set_channel to show");
+        console.log("app: set_channel to show "+variable);
         channelShow = variable;
         socket.broadcast.emit('set_channel', searchChannel(channelShow));
     });
@@ -106,9 +117,17 @@ io.sockets.on('connection', function(socket) {
 
     //save to db the code of a channel changed
     socket.on('save_channel', function(variable) {
-        console.log("app: save_channel");
+        console.log("app: save_channel "+variable.id);
         saveChannel(variable);
     });
+    
+    //return the code of a channel
+    socket.on('get_code', function(variable) { 
+        console.log("app: get_code "+variable);
+        var code = searchChannel(variable).code;
+        socket.emit('get_code', code);
+    });
+
 });  
 
 //ASCOLTA LA PORTA localhost per dire che il progetto è attivo
