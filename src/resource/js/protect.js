@@ -1,10 +1,3 @@
-/*let allImages = document.querySelectorAll("img");
-allImages.forEach((value)=>{
-    value.oncontextmenu = (e)=>{
-        e.preventDefault();
-    }
-})*/ 
-
 /*
 osc() oscilla su tre valori: primo indica larghezza (più è piccolo più la banda è grande), velocità (negativo per andare a sinistra), colore (colori bande)
 rotate() ruota su due valori (il primo è di quanto ruota, il secondo è quanto veloce)
@@ -26,53 +19,62 @@ modulateRotate() is similar to .rotate(), but it allows you to apply different a
 shape indica i lati, quanto è largo e quanto sfumare i bordi
 https://hydra.ojack.xyz/api/
 */
-/*
-s0.initCam() ; //loads a camera 
-    
-    osc(5, 0.9, 0.001)
-    .kaleid([3,4,5,7,8,9,10].fast(0.1))
-    .color(0.5, 0.3)
-    .colorama(0.6).modulate(src(s0))
-    .rotate(0.009,()=>Math.sin(time)* -0.02 )
-    .modulateRotate(o0,()=>Math.sin(time) * 0.003)
-    .modulate(o0, 0.9).modulate(src(s0))
-    .scale(0.9).modulate(src(s0))
-    .out(o0);
-    
-render(o0) */
- // show only output o2
 
 
 //INIT SOCKET
 
 var socket = io(); 
 var channel =  null; //default
-var toload = null; //default
-var hydra = new Hydra({ detectAudio: true});
-var cam = s0;
-cam.initCam() ;
+var toload = true; //default  
+var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
 
-var loadChannel = function(){
-    if(channel===1){  
+/*
+var cam = s0;
+cam.initCam();*/
+
+var loadChannel = function(){ 
+    if(channel!==null && toload){
+        if (document.getElementById('chalfunction')) {
+            document.getElementById('chalfunction').remove();
+          }
+          var s = document.createElement('script');
+          s.setAttribute("id", "chalfunction");
+          s.textContent = channel.code;//inne
+          document.body.appendChild(s); 
+          socket.emit('set_toload', false);
     }
 }
 
-//SET SOCKET EVENT
+//SET INIT SOCKET EVENT
+socket.emit('set_toload', true);
+
 socket.on('get_channel', function(variable) {
     channel = variable; 
 });
 
 socket.on('get_toload', function(variable) {
     toload = variable; 
-    if(toload){
-        loadChannel();
-    }
+    loadChannel();
 });
 
+//SET CHANGE SOCKET EVENT
+socket.on('set_channel', function(variable) {
+    channel = variable; 
+    loadChannel(); 
+});
+
+socket.on('set_toload', function(variable) {
+    toload = variable;  
+    loadChannel(); 
+});
+
+//SET INIT SOCKET EVENT
+
 var init = function(){
-    //SET SOCKET CONNECTION
+    //START SOCKET CONNECTION
     socket.on('connect', function() { 
     }); 
+    loadChannel();
 }
 
 init();

@@ -79,29 +79,34 @@ filesJs.forEach(file => {
 });
 
 //START LISTENING FOR CHANNEL CHANGE
-var channel =  1; //default
+var channelShow =  1; //default
 var toload = true; //default
 
 // handle incoming connections from clients
 io.sockets.on('connection', function(socket) {
-    console.log("sto connettendo");
+    console.log("app: init connection");
  
-    io.sockets.emit("get_channel", searchChannel(channel));  
+    io.sockets.emit("get_channel", searchChannel(channelShow));  
 
     io.sockets.emit("get_toload", toload);  
 
     //set the channel in charge
     socket.on('set_channel', function(variable) {
-        channel = variable;
+        console.log("app: set_channel to show");
+        channelShow = variable;
+        socket.broadcast.emit('set_channel', searchChannel(channelShow));
     });
 
     //set to load a content
     socket.on('set_toload', function(variable) {
+        console.log("app: set_toload "+variable);
         toload = variable;
+        socket.broadcast.emit('set_toload', variable);
     });
 
     //save to db the code of a channel changed
     socket.on('save_channel', function(variable) {
+        console.log("app: save_channel");
         saveChannel(variable);
     });
 });  
