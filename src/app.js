@@ -6,42 +6,24 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { searchChannel, saveChannel }  from './manager.js' 
-
-/*
-const http = require('http').Server(app); 
-const io = require('socket.io')(http); 
-*/
 import { createServer } from "http";
 import { Server } from "socket.io";
+
+
+//INIT ENV VAR
 const app = express();  
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const http = createServer(app);
 const io = new Server(http);
-
-//INIT .ENV VAR
 if(!process || !process.env || !process.env.TOKEN){
     dotenv.config();
 }
-
 var port = process.env.PORT || 8080;
 var token = process.env.TOKEN || '';
-
 app.use(express.static(__dirname + '/dist/'));
 
-//LOAD MODULE                                         node_modules\@codemirror\view\dist 
-/*app.get("/scripts/commands/index.js", (request, response) => { 
-    response.sendFile('index.js' , { root: './node_modules/@codemirror/commands/dist/' }) 
-});  
-app.get("/scripts/view/index.js", (request, response) => { 
-    response.sendFile('index.js' , { root: './node_modules/@codemirror/view/dist/' }) 
-});  */
-
-/*
-<script src="lib/codemirror.js"></script>
-<link rel="stylesheet" href="lib/codemirror.css">
-<script src="mode/javascript/javascript.js"></script>
-node_modules\codemirror */
+//LOAD MODULE  
 
 app.get("/mode/javascript/javascript.js", (request, response) => { 
     response.sendFile('javascript.js' , { root: './node_modules/codemirror/mode/javascript/' }) 
@@ -55,8 +37,6 @@ app.get("/lib/codemirror.js", (request, response) => {
 app.get("/dist/bootstrap.min.css", (request, response) => { 
     response.sendFile('bootstrap.min.css' , { root: './node_modules/bootstrap/dist/css/' }) 
 });  
-
-
 
 //LOAD ASSETS
 app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
@@ -98,9 +78,6 @@ filesJs.forEach(file => {
     });  
 });
 
- 
-
-
 //START LISTENING FOR CHANNEL CHANGE
 var channel =  1; //default
 var toload = true; //default
@@ -109,18 +86,24 @@ var toload = true; //default
 io.sockets.on('connection', function(socket) {
     console.log("sto connettendo");
  
-    io.sockets.emit("get_channel", channel);  
+    io.sockets.emit("get_channel", searchChannel(channel));  
 
     io.sockets.emit("get_toload", toload);  
 
+    //set the channel in charge
     socket.on('set_channel', function(variable) {
         channel = variable;
     });
 
+    //set to load a content
     socket.on('set_toload', function(variable) {
         toload = variable;
     });
-     
+
+    //save to db the code of a channel changed
+    socket.on('save_channel', function(variable) {
+        saveChannel(variable);
+    });
 });  
 
 //ASCOLTA LA PORTA localhost per dire che il progetto è attivo

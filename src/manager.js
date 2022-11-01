@@ -1,30 +1,8 @@
 /** MANEGGIA I DATI DA SALVARE */
-import { existsSync, writeFileSync, writeFile } from 'fs'; 
-var path = './resource/db.json';    
-var pathWrite = './src/resource/db.json';     
+import { existsSync, writeFileSync, writeFile } from 'fs';  
+import db from './resource/db.json'; 
+var pathWrite = './src/resource/db.json';      
 
-var checkDb = function(){ 
-    try {
-        if (existsSync(pathWrite)) {
-          return true;
-        }
-      } catch(err) {
-        console.error(err)
-      }
-      return false;
-}
-var sessionDb = function(){
-    if(checkDb()){
-        var db = require(path);
-        return db;
-    }else{
-        var db = { titol:'DB channel', channel: []};
-        var stringed =  JSON.stringify(db);
-        console.log(stringed); 
-        writeFileSync(pathWrite, stringed.toString());
-        return sessionDb();
-    }
-}
 var flush = function(sampleObject){
     writeFile(pathWrite, JSON.stringify(sampleObject), (err) => {
         if (err) {
@@ -35,8 +13,7 @@ var flush = function(sampleObject){
     });
 } 
 var saveChannel = function(channelToSave){
-    var found = false;
-    var db = sessionDb();
+    var found = false; 
     db.channel.forEach(channel => {
         if(channel.id === channelToSave.id){
             channel = channelToSave;
@@ -49,8 +26,7 @@ var saveChannel = function(channelToSave){
     flush(db);
 } 
 var searchChannel = function(channelID){
-    var found = false;
-    var db = sessionDb();
+    var found = false; 
     var channelToFind = {
         id: channelID,
         code: ''
