@@ -67,9 +67,5 @@ var searchChannel = function(channelID){
     return channelToFind;
 }
 
-export function searchChannel(channelID) {
-    return searchChannel(channelID);
-}
-export function saveChannel(channelID) {
-    return saveChannel(channelID);
-}
+
+export { searchChannel, saveChannel } 
