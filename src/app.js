@@ -5,6 +5,8 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+var manager = require('./manager.js'); 
+
 /*
 const http = require('http').Server(app); 
 const io = require('socket.io')(http); 
