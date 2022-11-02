@@ -34,28 +34,57 @@
     <meta property="og:site_name" content="A PROJECT BY EMILIANO BRAZZOLI AKA VITREOUS">
 
 </head>
+<style>
+    div.height100 {
+        height: 100%;
+    }
+    div.height90 {
+        height: 90%;
+    }
+    .CodeMirror{
+        min-height: 100%;
+    }
+    .spacingRow{
+        padding: 10px 0px;;
+    }
+    .code{
+        background: #282a36;
+    }
+    .mix{
+        background: #505050;
+    }
+    .tv{ 
+        padding-top: 10px;
+    }
+    .tv #hydra-canvas{
+        border: 3px solid white;
+        background: black;
+    }
+</style>
+<body style="margin: 0;" >
 
-<body style="margin: 0;">
-
-    <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
-    <div class="container-fluid">
-        <div class="row">
-            <div class=" col-6">
-                <div class="row">
-                    <div class="col-12">
-                        <textarea id="codejs">
+    <div id="hydra-ui" class="height100" style="position: absolute;">
+    <div class="container-fluid height100">
+        <div class="row height100">
+            <div class=" col-6 height100 code">
+                <div class="row height90 ">
+                    <div class="col-12 height100">
+                        <textarea id="codejs" >
         
                         </textarea>
                     </div>
-                    <div style="text-align:center" class=" col-3">
+                </div>
+                <div class="row spacingRow  justify-content-end ">
+                    
+                    <div style="text-align:center" class=" col-3  ">
                         <button style="width:90%" id="prev" onclick="selectActionExec('prev')" class="btn btn-primary">Show</button>
                     </div>
-                </div>
+                </div> 
             </div>
-            <div class="col-6">
+            <div class="col-6 mix">
 
                 <div class="row">
-                    <div class=" col-12">
+                    <div class=" tv col-12">
                         <canvas id="hydra-canvas" style="
                         width: 100%;
                         height: 100%;  
@@ -64,7 +93,7 @@
                     </div>
                     
                 </div>
-                <div class="row">
+                <div class="row spacingRow" >
                     <div style="text-align:center" class=" col-3">
                         <button style="width:90%" id="0" onclick="selectChannelLoad('0')" class="btn btn-primary">0</button>
                     </div>
@@ -77,6 +106,8 @@
                     <div style="text-align:center" class=" col-3">
                         <button style="width:90%" id="3" onclick="selectChannelLoad('3')" class="btn btn-primary">3</button>
                     </div>
+                </div>
+                <div class="row spacingRow" >
                     <div style="text-align:center" class=" col-3">
                         <button style="width:90%" id="4" onclick="selectChannelLoad('4')" class="btn btn-primary">4</button>
                     </div>
@@ -90,7 +121,7 @@
                         <button style="width:90%" id="7" onclick="selectChannelLoad('7')" class="btn btn-primary">7</button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row spacingRow">
                     <div style="text-align:center" class=" col-3">
                         <button style="width:90%" id="save" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
                     </div> 
@@ -132,6 +163,6 @@
     </div>
     <script id="script" type="text/javascript">
 
-    </script>
+    </script></div>
 </body> 
 </html>

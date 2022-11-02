@@ -1,9 +1,64 @@
+
+
+#hydra-ui {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+
+#hydra-ui canvas{
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto 1920 / 1080;
+}
+
+body{
+    background: #000;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    line-height: 1.4;
+}
+
+button{ 
+    background: #363636 !important;
+    border: 2px solid #2c2c2c !important;
+    border-radius: 0% !important;
+}
+
 .selectedAction{
-    background-color: white;
-    color: blue;
+    background-color: white !important;
+    color: #464646;
 }
 
 .selectedChannel{
-    background-color: white;
-    color: blue;
+    background-color: white !important;
+    color: #464646;
+}
+
+.VitreousWelcome{
+    text-align: left !important;
+    display: block;
+    background: #7676768a;
+    font-size: 25px;
+    padding: 100px;
+    margin: 100px;
+    border: 5px solid #0000004f;
+    margin-left: 10px;
+} 
+
+.liveChannel{
+    background: #740000 !important;
+    border: 2px solid #ac0000 !important;
+    border-radius: 0% !important;
+}
+
+.liveChannel.selectedChannel{
+    background-color: white !important;
+    color: #740000;
 }

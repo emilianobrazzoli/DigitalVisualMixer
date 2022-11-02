@@ -26,7 +26,8 @@ https://hydra.ojack.xyz/api/
 var socket = io(); 
 var channel =  null; //default
 var toload = null; //default  
-var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
+var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas") });
+hydra.setResolution(1920, 1080);
 
 var loadChannel = function(){ 
     if(channel!==null && toload){
@@ -72,7 +73,9 @@ var init = function(){
     socket.on('connect', function() { 
     }); 
     loadChannel();
+     
 }
 
 init();
+ 
  

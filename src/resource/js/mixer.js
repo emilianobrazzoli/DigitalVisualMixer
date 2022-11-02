@@ -1,9 +1,12 @@
 var channelSelected= 0;
+var channelLive= 0;
 var socket = io(); 
 var selectedAction = null;
 var loadprev=false;
 
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
+
+hydra.setResolution(1920, 1080);
 
 var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
   mode: "javascript",
@@ -11,7 +14,9 @@ var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
   theme: "dracula"
 });
 
-
+socket.on('get_channel', function(variable) {
+  showChannelLive(variable.id); 
+});
 
 socket.on('get_code', function(variable) {
   var code = variable;   
@@ -38,7 +43,7 @@ var prev = function () {
   }
   var jsx = js.getValue();
   if(!jsx){
-    jsx="osc(0).color(0).out(o0);"
+    jsx="hush()\n\ns0.initImage(\"./src/resource/img/alpha.png\") \n \nsrc(s0) \n  .out(o0)\n\n \n"
     js.getDoc().setValue(jsx);
   }
   var s = document.createElement('script');
@@ -54,6 +59,18 @@ var save = function () {
       code: jsx
     }
     socket.emit('save_channel', channel);  
+    showChannelLive(channelSelected); 
+}
+
+var showChannelLive= function(channel){
+  var elementToremove = document.getElementsByClassName("liveChannel");
+  if(elementToremove.length>0){
+    elementToremove[0].classList.remove("liveChannel");
+  }
+  var element = document.getElementById(channel);
+  if(element)
+    element.classList.add("liveChannel");
+  channelLive=parseInt(channel);
 }
 
 var selectChannelLoad= function(channel){
