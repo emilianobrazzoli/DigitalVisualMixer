@@ -62,3 +62,29 @@ button{
     background-color: white !important;
     color: #740000;
 }
+
+div.height100 {
+    height: 100%;
+}
+div.height90 {
+    height: 90%;
+}
+.CodeMirror{
+    min-height: 100%;
+}
+.spacingRow{
+    padding: 10px 0px;;
+}
+.code{
+    background: #282a36;
+}
+.mix{
+    background: #505050;
+}
+.tv{ 
+    padding-top: 10px;
+}
+.tv #hydra-canvas{
+    border: 3px solid white;
+    background: black;
+}

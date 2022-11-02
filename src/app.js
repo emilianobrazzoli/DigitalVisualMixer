@@ -24,7 +24,6 @@ var token = process.env.TOKEN || '';
 app.use(express.static(__dirname + '/dist/'));
 
 //LOAD MODULE  
-
 app.get("/mode/javascript/javascript.js", (request, response) => { 
     response.sendFile('javascript.js' , { root: './node_modules/codemirror/mode/javascript/' }) 
 });  
@@ -33,6 +32,9 @@ app.get("/lib/codemirror.css", (request, response) => {
 });  
 app.get("/lib/codemirror.js", (request, response) => { 
     response.sendFile('codemirror.js' , { root: './node_modules/codemirror/lib/' }) 
+});   
+app.get("/dist/hydra-synth.js", (request, response) => { 
+    response.sendFile('hydra-synth.js' , { root: './node_modules/hydra-synth/dist/' }) 
 });  
 app.get("/dist/bootstrap.min.css", (request, response) => { 
     response.sendFile('bootstrap.min.css' , { root: './node_modules/bootstrap/dist/css/' }) 
@@ -99,7 +101,7 @@ filesJs.forEach(file => {
 });
 
 //START LISTENING FOR CHANNEL CHANGE
-var channelShow =  1; //default
+var channelShow =  0; //default
 var toload = true; //default
 
 // handle incoming connections from clients
