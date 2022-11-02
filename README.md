@@ -7,7 +7,7 @@ This mixer use the video synth engine [hydra-synth](https://github.com/hydra-syn
 ### To use this localy:
 Download the module or clone it by git 
 ```
-git clone --recurse-submodules https://github.com/hydra-synth/hydra.git
+git clone --recurse-submodules https://github.com/emilianobrazzoli/DigitalVisualMixer.git
 ```
 
 Run npm install
