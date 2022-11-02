@@ -1,6 +1,5 @@
 /auth.json
 /node_modules/
 /.env
-/.vscode/  
-/src/resource/db.json
-src/resource/db.json 
+/.vscode/   
+./src/resource/db.json 
