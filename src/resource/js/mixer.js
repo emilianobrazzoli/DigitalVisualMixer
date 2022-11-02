@@ -3,7 +3,7 @@ var channelLive= 0;
 var socket = io(); 
 var selectedAction = null;
 var loadprev=false;
-
+var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
 
 hydra.setResolution(1920, 1080);
@@ -144,3 +144,8 @@ var init = function(){
 
 init();
 
+document.onkeyup = function(e) {
+  if (e.ctrlKey  && e.shiftKey && e.key === "Enter") {
+    selectActionExec('prev');
+  }
+};

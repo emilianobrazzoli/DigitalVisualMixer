@@ -66,7 +66,7 @@
     <div id="hydra-ui" class="height100" style="position: absolute;">
     <div class="container-fluid height100">
         <div class="row height100">
-            <div class=" col-6 height100 code">
+            <div class=" col-md-8 height100 code">
                 <div class="row height90 ">
                     <div class="col-12 height100">
                         <textarea id="codejs" >
@@ -81,7 +81,7 @@
                     </div>
                 </div> 
             </div>
-            <div class="col-6 mix">
+            <div class="col-md-4 mix">
 
                 <div class="row">
                     <div class=" tv col-12">
@@ -127,6 +127,14 @@
                     </div> 
                     <div style="text-align:center" class=" col-6">
                         <button style="width:90%" id="saverun" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
+                    </div>
+                </div>
+                <div class="row spacingRow">
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="api" onclick="window.open(apiLink,'_blank')" class="btn btn-primary">Api</button>
+                    </div> 
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="live"  onclick="window.open('./live','_blank')" class="btn btn-primary">Live</button>
                     </div>
                 </div>
                 <!--
