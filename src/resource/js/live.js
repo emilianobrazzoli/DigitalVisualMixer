@@ -28,6 +28,7 @@ var channel =  null; //default
 var toload = null; //default  
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas") });
 hydra.setResolution(1920, 1080);
+a.setBins(6);
 
 var loadChannel = function(){ 
     if(channel!==null && toload){

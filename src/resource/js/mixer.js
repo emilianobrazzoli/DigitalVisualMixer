@@ -5,8 +5,10 @@ var selectedAction = null;
 var loadprev=false;
 var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
-
 hydra.setResolution(1920, 1080);
+a.show();
+a.setBins(6);
+console.log(a);
 
 var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
   mode: "javascript",
@@ -35,6 +37,7 @@ var load = function(){
 var run = function(){
   socket.emit('set_channel', channelSelected);
   socket.emit('set_toload', true); 
+  showChannelLive(channelSelected); 
 }
  
 var prev = function () {
@@ -59,7 +62,6 @@ var save = function () {
       code: jsx
     }
     socket.emit('save_channel', channel);  
-    showChannelLive(channelSelected); 
 }
 
 var showChannelLive= function(channel){
