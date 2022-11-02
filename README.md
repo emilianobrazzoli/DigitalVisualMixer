@@ -24,8 +24,10 @@ Go to your [localhost](http://localhost:8080/) and use the mixer that module the
 
 ## How to code
 
-Here some source for learning hydra
+Here some source for learning hydra:
+
 [doc](https://hydra.ojack.xyz/docs/#/)
+
 [api](https://hydra.ojack.xyz/api/)
 
 
