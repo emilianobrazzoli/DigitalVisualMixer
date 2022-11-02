@@ -1,6 +1,4 @@
 /auth.json
 /node_modules/
-/.env
-/.vscode/   
-/src/resource/db.json
-/package-lock.json.
+/.env 
+src/resource/db.json
