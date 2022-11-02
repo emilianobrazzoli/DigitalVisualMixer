@@ -1,6 +1,8 @@
 # DigitalVisualMixer
 
 This mixer use the video synth engine [hydra-synth](https://github.com/hydra-synth/hydra-synth).
+### Requisite
+[nodejs](https://nodejs.org/en/download/)
 
 ### To use this localy:
 Download the module or clone it by git 
