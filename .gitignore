@@ -3,3 +3,4 @@
 /.env
 /.vscode/   
 /src/resource/db.json
+/package-lock.json.
