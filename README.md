@@ -30,6 +30,6 @@ Here some source for learning hydra:
 
 [api](https://hydra.ojack.xyz/api/)
 
-
+Made by [@vitreous_spaghetti](https://www.instagram.com/vitreous_spaghetti/) 
 
 ![@vitreous_spaghetti](/src/resource/img/alpha.png?raw=true)
