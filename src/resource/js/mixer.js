@@ -9,6 +9,8 @@ hydra.setResolution(1920, 1080);
 a.show();
 a.setBins(6);
 console.log(a);
+console.log("speed "+speed);
+console.log("bpm "+bpm); 
 
 var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
   mode: "javascript",
@@ -109,7 +111,16 @@ var selectAction = function(action){
     element.classList.add("selectedAction");
   selectedAction=action;
 }
-
+var resetAudio = function(){
+  a.show();
+  a.setScale(10)
+  a.setBins(6)
+  a.setSmooth(0.8)
+  a.setCutoff(3)
+  console.log(a);
+  console.log("speed "+speed);
+  console.log("bpm "+bpm); 
+}
 var exec = function () { 
   if(selectedAction === 'run'){
     run();
