@@ -88,3 +88,10 @@ div.height90 {
     border: 3px solid white;
     background: black;
 }
+.multychannel{
+    
+    max-height: 430px;
+    overflow: hidden;
+    overflow-y: auto;
+
+}
