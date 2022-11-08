@@ -67,7 +67,7 @@
                     
                 </div>
                 
-                <div class="multychannel">
+                <div class="multychannel" title="change the channel workplace">
                     <div class="row spacingRow" >
                         <div style="text-align:center" class=" col-3">
                             <button style="width:90%" id="0" onclick="selectChannelLoad('0')" class="btn btn-primary">0</button>
@@ -141,23 +141,26 @@
                 </div>
                 <div class="row spacingRow">
                     <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="save" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
+                        <button style="width:90%" id="save"  title="save the channel in the workplace" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
                     </div> 
                     <div style="text-align:center" class=" col-6">
-                        <button style="width:90%" id="saverun" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
+                        <button style="width:90%" id="saverun"  title="save the channel in the workplace and then send to live" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
                     </div>
                 </div>
                 <div class="row spacingRow">
                     <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="api" onclick="window.open(apiLink,'_blank')" class="btn btn-primary">Api</button>
+                        <button style="width:90%" id="Autosave"  title="active the autosave mode when you change channel in workplace"  onclick="autosave()" class="btn btn-primary"> Autosave</button>
+                    </div>
+                    <div style="text-align:center" class=" col-3">
+                        <button style="width:90%" id="api" title="show api of hydra" onclick="window.open(apiLink,'_blank')" class="btn btn-primary">Api</button>
                     </div> 
                     <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="4"  onclick="window.open('./live','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350')" class="btn btn-primary"> Live</button>
+                        <button style="width:90%" id="live" title="show live source"  onclick="window.open('./live','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350')" class="btn btn-primary"> Live</button>
                     </div>
                 </div>
                 <div class="row spacingRow">
                     <div style="text-align:left" class=" col-12">
-                        F12 for log error in IRL
+                        F12 for log error in IRL for the code in your workplace
                     </div>  
                 </div>
                 <!--

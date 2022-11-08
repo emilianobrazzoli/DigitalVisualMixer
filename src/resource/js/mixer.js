@@ -1,6 +1,7 @@
 var channelSelected= 0;
 var channelLive= 0;
 var socket = io(); 
+var isautosave = false;
 var selectedAction = null;
 var loadprev=false;
 var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
@@ -65,7 +66,17 @@ var save = function () {
     }
     socket.emit('save_channel', channel);  
 }
-
+var autosave= function(){
+  var element = document.getElementById("Autosave"); 
+  isautosave = !isautosave; 
+  if(element ){
+    if(isautosave){
+      element.classList.add("liveChannel"); 
+    }else{
+      element.classList.remove("liveChannel");
+    }
+  }
+}
 var showChannelLive= function(channel){
   var elementToremove = document.getElementsByClassName("liveChannel");
   if(elementToremove.length>0){
@@ -78,6 +89,9 @@ var showChannelLive= function(channel){
 }
 
 var selectChannelLoad= function(channel){
+  if(isautosave){
+    save();
+  }
   var elementToremove = document.getElementsByClassName("selectedChannel");
   if(elementToremove.length>0){
     elementToremove[0].classList.remove("selectedChannel");
