@@ -5,10 +5,7 @@
     "main": "./src/app.js",
     "scripts": {
         "start": "node ./src/app.js"
-    },
-    "engines": {
-        "node": "12.x"
-    },
+    }, 
     "author": "EmilianoBrazzoli",
     "license": "MIT",
     "type": "module",
