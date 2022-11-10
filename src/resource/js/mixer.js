@@ -43,6 +43,7 @@ var run = function(){
   socket.emit('set_channel', channelSelected);
   socket.emit('set_toload', true); 
   showChannelLive(channelSelected); 
+  console.log("Save channel "+channelSelected);
 }
  
 var prev = function () {
@@ -67,7 +68,7 @@ var save = function () {
       code: jsx
     }
     socket.emit('save_channel', channel);  
-    console.log("Save channel "+channel)
+    console.log("Save channel "+channel.id);
 }
 var autosave= function(){
   var element = document.getElementById("Autosave"); 
