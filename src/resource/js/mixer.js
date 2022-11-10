@@ -49,7 +49,7 @@ var prev = function () {
   }
   var jsx = js.getValue();
   if(!jsx){
-    jsx="hush()\n\ns0.initImage(\"./src/resource/img/alpha.png\") \n \nsrc(s0) \n  .out(o0)\n\n \n"
+    jsx="hush();\nresetAudioAndSpeed();\ns0.initImage(\"./src/resource/img/alpha.png\");\nsrc(s0).out(o0);\nrender(o0);"
     js.getDoc().setValue(jsx);
   }
   var s = document.createElement('script');
@@ -125,16 +125,20 @@ var selectAction = function(action){
     element.classList.add("selectedAction");
   selectedAction=action;
 }
-var resetAudio = function(){
+
+var resetAudioAndSpeed = function(){
   a.show();
   a.setScale(10)
   a.setBins(6)
   a.setSmooth(0.8)
   a.setCutoff(3)
+  sepped=1;
+  bpm=30;
   console.log(a);
   console.log("speed "+speed);
   console.log("bpm "+bpm); 
 }
+
 var exec = function () { 
   if(selectedAction === 'run'){
     run();

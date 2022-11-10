@@ -69,6 +69,19 @@ socket.on('set_toload', function(variable) {
     loadChannel(); 
 });
  
+var resetAudioAndSpeed = function(){
+    a.show();
+    a.setScale(10)
+    a.setBins(6)
+    a.setSmooth(0.8)
+    a.setCutoff(3)
+    sepped=1;
+    bpm=30;
+    console.log(a);
+    console.log("speed "+speed);
+    console.log("bpm "+bpm); 
+  }
+  
 var init = function(){
     //START SOCKET CONNECTION
     socket.on('connect', function() { 
