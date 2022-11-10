@@ -14,10 +14,12 @@ console.log("speed "+speed);
 console.log("bpm "+bpm); 
 
 var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
-  mode: "javascript",
   lineNumbers: true,
-  theme: "dracula"
-});
+  theme: "dracula",
+  extraKeys: {"Ctrl-Space": "autocomplete"},
+  mode: {name: "javascript", globalVars: true}
+}); 
+
 
 socket.on('get_channel', function(variable) {
   showChannelLive(variable.id); 

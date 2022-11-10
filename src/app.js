@@ -50,6 +50,13 @@ themeCss.forEach(file => {
     });  
 });
 
+var filesJs = fs.readdirSync('./src/resource/addon/');
+filesJs.forEach(file => {  
+    console.log("/src/resource/addon/"+file);
+    app.get("/src/resource/addon/"+file, (request, response) => { 
+        response.sendFile(file , { root: './src/resource/addon/' }) 
+    });  
+});
 
 //LOAD ASSETS
 app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
