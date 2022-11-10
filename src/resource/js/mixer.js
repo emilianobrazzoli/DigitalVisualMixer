@@ -127,7 +127,6 @@ var selectAction = function(action){
 }
 
 var resetAudioAndSpeed = function(){
-  a.show();
   a.setScale(10)
   a.setBins(6)
   a.setSmooth(0.8)
