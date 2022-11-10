@@ -67,6 +67,7 @@ var save = function () {
       code: jsx
     }
     socket.emit('save_channel', channel);  
+    console.log("Save channel "+channel)
 }
 var autosave= function(){
   var element = document.getElementById("Autosave"); 
@@ -179,5 +180,8 @@ init();
 document.onkeyup = function(e) {
   if (e.ctrlKey  && e.shiftKey && e.key === "Enter") {
     selectActionExec('prev');
+  }
+  if (e.ctrlKey  && e.shiftKey && e.key === "S") {
+    save();
   }
 };
