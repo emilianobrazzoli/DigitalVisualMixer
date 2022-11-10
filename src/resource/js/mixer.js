@@ -37,13 +37,14 @@ socket.on('get_code', function(variable) {
 
 var load = function(){
   socket.emit('get_code', channelSelected); 
+  console.log("load channel "+channelSelected);
 }
 
 var run = function(){
   socket.emit('set_channel', channelSelected);
   socket.emit('set_toload', true); 
   showChannelLive(channelSelected); 
-  console.log("Save channel "+channelSelected);
+  console.log("run channel "+channelSelected);
 }
  
 var prev = function () {
