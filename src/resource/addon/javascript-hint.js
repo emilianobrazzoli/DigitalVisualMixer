@@ -2,6 +2,9 @@
 // Distributed under an MIT license: https://codemirror.net/5/LICENSE
 
 var elementHydra = {
+   resetAudioAndSpeed : {
+      description: "reset audio, speed and bpm",
+   },
   noise: {
      description: "Generate [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise).",
      example: [
