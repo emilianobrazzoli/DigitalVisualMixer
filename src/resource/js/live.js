@@ -40,6 +40,7 @@ var loadChannel = function(){
           s.textContent = channel.code;//inne
           document.body.appendChild(s); 
           socket.emit('set_toload', false);
+          a.hide();
     }
 }
 
