@@ -1,4 +1,6 @@
 TODO--------------
+strutturare meglio mixer.js
+iniziare ad ideare magari un menù contestuale
 sistemare ctrl+space
 preparare una pagina per le macro ( scalabile: idea di memorizzare macro )
 ipotizzare console di error? o quantomeno un pop-up con errore
