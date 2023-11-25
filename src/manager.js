@@ -36,6 +36,19 @@ var flush = function (sampleObject) {
     writeFileSync(pathWrite, newDb);
 }
 
+var getAll = function() { 
+    var db = sessionDb(); 
+    if (!db.channel || !db.channel[0]) {
+        saveChannel({id:0, name:0, code: '' });
+    }
+    var channels = db.channel ;
+    channels = channels.sort((a, b) => {
+        var result =a.id<b.id;
+        return result? -1 :0;
+      });
+    return channels ;
+}
+
 var saveChannel = function (channelToSave) {
     var found = false;
     var db = sessionDb();
@@ -72,4 +85,4 @@ var searchChannel = function (channelID) {
     return channelToFind;
 }
 
-export { searchChannel, saveChannel } 
+export { searchChannel, saveChannel, getAll } 

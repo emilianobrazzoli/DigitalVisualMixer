@@ -5,7 +5,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { searchChannel, saveChannel }  from './manager.js' 
+import { searchChannel, saveChannel, getAll }  from './manager.js' 
 import { createServer } from "http";
 import { Server } from "socket.io";
 
@@ -108,6 +108,7 @@ filesJs.forEach(file => {
 });
 
 //START LISTENING FOR CHANNEL CHANGE
+var channelLive =  0; //default
 var channelShow =  0; //default
 var toload = true; //default
 
@@ -115,6 +116,7 @@ var toload = true; //default
 io.sockets.on('connection', function(socket) {
     console.log("app: init connection");
  
+    //getChannel setted live
     io.sockets.emit("get_channel", searchChannel(channelShow));  
 
     io.sockets.emit("get_toload", toload);  
@@ -126,9 +128,16 @@ io.sockets.on('connection', function(socket) {
         socket.broadcast.emit('set_channel', searchChannel(channelShow));
     });
 
+    //return channel in live
+    socket.on('get_in_load', function() {
+        console.log("app: get_in_load "+channelShow);
+        socket.emit('get_in_load', channelShow);
+    });
+
     //set to load a content
     socket.on('set_toload', function(variable) {
         console.log("app: set_toload "+variable);
+        channelLive = variable;
         toload = variable;
         socket.broadcast.emit('set_toload', variable);
     });
@@ -139,11 +148,25 @@ io.sockets.on('connection', function(socket) {
         saveChannel(variable);
     });
     
+    //return all the channels
+    socket.on('get_all', function() {
+        console.log("app: get_all ");
+        var allChannel = getAll();
+        socket.emit('get_all', allChannel);
+    });
+    
     //return the code of a channel
     socket.on('get_code', function(variable) { 
         console.log("app: get_code "+variable);
         var code = searchChannel(variable).code;
         socket.emit('get_code', code);
+    });
+
+    //return a single channel
+    socket.on('find_channel', function(variable) { 
+        console.log("app: get_code "+variable);
+        var channel = searchChannel(variable);
+        socket.emit('find_channel', channel);
     });
 
 });  

@@ -1,220 +1,108 @@
 <!DOCTYPE html>
 <html lang="it">
+    <head>
+        <title>Digital Mixer Vitreous</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
 
 
-<head>
-    <title>Digital Mixer Vitreous</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <script src="/dist/hydra-synth.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="lib/codemirror.js"></script>
+        <script src="mode/javascript/javascript.js"></script>
+        <link rel="stylesheet" href="/lib/codemirror.css">
+        <link rel="stylesheet" href="/theme/dracula.css">
+        <link rel="stylesheet" href="/dist/bootstrap.min.css">
+
+        <script src="./src/resource/addon/show-hint.js" defer></script>
+        <script src="./src/resource/addon/javascript-hint.js" defer></script>
+        <link rel="stylesheet" href="./src/resource/addon/show-hint.css" defer></script>
+
+        <script src="./src/resource/js/mixer.js" defer></script>
+        <link rel="stylesheet" href="./src/resource/css/basic.css">
 
 
-    <script src="/dist/hydra-synth.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="lib/codemirror.js"></script>
-    <script src="mode/javascript/javascript.js"></script>
-    <link rel="stylesheet" href="/lib/codemirror.css">
-    <link rel="stylesheet" href="/theme/dracula.css">
-    <link rel="stylesheet" href="/dist/bootstrap.min.css">
+        <meta name="apple-mobile-web-app-title" content="Live setup Vitreous">
+        <meta name="application-name" content="A PROJECT BY EMILIANO BRAZZOLI AKA VITREOUS">
+        <meta name="description" content="live console for visual">
+        <meta property="og:locale" content="it_IT">
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Live setup Vitreous Spaghetti)">
+        <meta property="og:description" content="live console for visual">
+        <meta property="og:site_name" content="A PROJECT BY EMILIANO BRAZZOLI AKA VITREOUS">
 
-    <script src="./src/resource/addon/show-hint.js" defer></script>
-    <script src="./src/resource/addon/javascript-hint.js" defer></script>
-    <link rel="stylesheet" href="./src/resource/addon/show-hint.css" defer></script>
+    </head> 
+    <body style="margin: 0;" >
 
-    <script src="./src/resource/js/mixer.js" defer></script>
-    <link rel="stylesheet" href="./src/resource/css/basic.css">
-
-
-    <meta name="apple-mobile-web-app-title" content="Live setup Vitreous">
-    <meta name="application-name" content="A PROJECT BY EMILIANO BRAZZOLI AKA VITREOUS">
-    <meta name="description" content="live console for visual">
-    <meta property="og:locale" content="it_IT">
-    <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Live setup Vitreous Spaghetti)">
-    <meta property="og:description" content="live console for visual">
-    <meta property="og:site_name" content="A PROJECT BY EMILIANO BRAZZOLI AKA VITREOUS">
-
-</head> 
-<body style="margin: 0;" >
-
-    <div id="hydra-ui" class="height100" style="position: absolute;">
-    <div class="container-fluid height100">
-        <div class="row height100">
-            <div class=" col-md-8 height100 code">
-                <div class="row height90 ">
-                    <div class="col-12 height100">
-                        <textarea id="codejs" >
-        
-                        </textarea>
+        <div id="hydra-ui" class="height100" style="position: absolute;">
+        <div class="container-fluid height100">
+            <div class="row height100">
+                <div class=" col-md-8 height100 code">
+                    <div class="row height90 ">
+                        <div class="col-12 height100">
+                            <textarea id="codejs" >
+            
+                            </textarea>
+                        </div>
                     </div>
+                    <div class="row spacingRow  justify-content-end ">
+                        <div style="text-align:center" class=" col-3  ">
+                            <input type="text" id="channelName" name="channelName">
+                        </div>
+                        <div style="text-align:center" class=" col-3  ">
+                            <button style="width:90%" id="prev" onclick="selectActionExec('prev')" class="btn btn-primary">Show</button>
+                        </div>
+                    </div> 
                 </div>
-                <div class="row spacingRow  justify-content-end ">
-                    
-                    <div style="text-align:center" class=" col-3  ">
-                        <button style="width:90%" id="prev" onclick="selectActionExec('prev')" class="btn btn-primary">Show</button>
+                <div class="col-md-4 mix">
+
+                    <div class="row">
+                        <div class=" tv col-12">
+                            <canvas id="hydra-canvas" style="
+                            width: 100%;
+                            height: 100%;  
+                            aspect-ratio: auto 100 / 80;"> </canvas>
+                        </div>
                     </div>
+                
+                    <div class="multychannel" title="change the channel workplace" id="multychannel" >
+                    </div>
+                    
+                    <div class="multychannel" title="change the channel workplace" id="function" >
+                        <div class="row spacingRow">
+                            <div style="text-align:center" class=" col-3">
+                                <button style="width:90%" id="save"  title="save the channel in the workplace" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
+                            </div> 
+                            <div style="text-align:center" class=" col-6">
+                                <button style="width:90%" id="saverun"  title="save the channel in the workplace and then send to live" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
+                            </div>
+                        </div>
+                        <div class="row spacingRow">
+                            <div style="text-align:center" class=" col-3">
+                                <button style="width:90%" id="Autosave"  title="active the autosave mode when you change channel in workplace"  onclick="autosave()" class="btn btn-primary"> Autosave</button>
+                            </div>
+                            <div style="text-align:center" class=" col-3">
+                                <button style="width:90%" id="api" title="show api of hydra" onclick="window.open(apiLink,'_blank')" class="btn btn-primary">Api</button>
+                            </div> 
+                            <div style="text-align:center" class=" col-3">
+                                <button style="width:90%" id="live" title="show live source"  onclick="window.open('./live','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350')" class="btn btn-primary"> Live</button>
+                            </div>
+                        </div>
+                        <div class="row spacingRow">
+                            <div style="text-align:left" class=" col-12">
+                                F12 for log error in IRL for the code in your workplace
+                            </div>  
+                        </div> 
+                    </div>
+
                 </div> 
             </div>
-            <div class="col-md-4 mix">
-
-                <div class="row">
-                    <div class=" tv col-12">
-                        <canvas id="hydra-canvas" style="
-                        width: 100%;
-                        height: 100%;  
-                        aspect-ratio: auto 100 / 80;"> </canvas>
-
-                    </div>
-                    
-                </div>
-                
-                <div class="multychannel" title="change the channel workplace">
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="0" onclick="selectChannelLoad('0')" class="btn btn-primary">0</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="1" onclick="selectChannelLoad('1')" class="btn btn-primary">1</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="2" onclick="selectChannelLoad('2')" class="btn btn-primary">2</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="3" onclick="selectChannelLoad('3')" class="btn btn-primary">3</button>
-                        </div>
-                    </div>
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="4" onclick="selectChannelLoad('4')" class="btn btn-primary">4</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="5" onclick="selectChannelLoad('5')" class="btn btn-primary">5</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="6" onclick="selectChannelLoad('6')" class="btn btn-primary">6</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="7" onclick="selectChannelLoad('7')" class="btn btn-primary">7</button>
-                        </div>
-                    </div>
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="8" onclick="selectChannelLoad('8')" class="btn btn-primary">8</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="9" onclick="selectChannelLoad('9')" class="btn btn-primary">9</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="10" onclick="selectChannelLoad('10')" class="btn btn-primary">10</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="11" onclick="selectChannelLoad('11')" class="btn btn-primary">11</button>
-                        </div>
-                    </div>
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="12" onclick="selectChannelLoad('12')" class="btn btn-primary">12</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="13" onclick="selectChannelLoad('13')" class="btn btn-primary">13</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="14" onclick="selectChannelLoad('14')" class="btn btn-primary">14</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="15" onclick="selectChannelLoad('15')" class="btn btn-primary">15</button>
-                        </div>
-                    </div>
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="16" onclick="selectChannelLoad('16')" class="btn btn-primary">16</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="17" onclick="selectChannelLoad('17')" class="btn btn-primary">17</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="18" onclick="selectChannelLoad('18')" class="btn btn-primary">18</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="19" onclick="selectChannelLoad('19')" class="btn btn-primary">19</button>
-                        </div>
-                    </div>
-                    <div class="row spacingRow" >
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="20" onclick="selectChannelLoad('20')" class="btn btn-primary">20</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="21" onclick="selectChannelLoad('21')" class="btn btn-primary">21</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="22" onclick="selectChannelLoad('22')" class="btn btn-primary">22</button>
-                        </div>
-                        <div style="text-align:center" class=" col-3">
-                            <button style="width:90%" id="23" onclick="selectChannelLoad('23')" class="btn btn-primary">23</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row spacingRow">
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="save"  title="save the channel in the workplace" onclick="selectActionExec('save')" class="btn btn-primary">Save</button>
-                    </div> 
-                    <div style="text-align:center" class=" col-6">
-                        <button style="width:90%" id="saverun"  title="save the channel in the workplace and then send to live" onclick="selectActionExec('saverun')" class="btn btn-primary">Save and Run</button>
-                    </div>
-                </div>
-                <div class="row spacingRow">
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="Autosave"  title="active the autosave mode when you change channel in workplace"  onclick="autosave()" class="btn btn-primary"> Autosave</button>
-                    </div>
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="api" title="show api of hydra" onclick="window.open(apiLink,'_blank')" class="btn btn-primary">Api</button>
-                    </div> 
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="live" title="show live source"  onclick="window.open('./live','winname','directories=no,titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=400,height=350')" class="btn btn-primary"> Live</button>
-                    </div>
-                </div>
-                <div class="row spacingRow">
-                    <div style="text-align:left" class=" col-12">
-                        F12 for log error in IRL for the code in your workplace
-                    </div>  
-                </div>
-                <!--
-                <div class="row">
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="prev" onclick="selectAction('prev')" class="btn btn-primary">Prev</button>
-                    </div>
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="save" onclick="selectAction('save')" class="btn btn-primary">Save</button>
-                    </div>
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="run" onclick="selectAction('run')" class="btn btn-primary">Run</button>
-                    </div>
-                    <div style="text-align:center" class=" col-3">
-                        <button style="width:90%" id="load" onclick="selectAction('load')" class="btn btn-primary">load</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div style="text-align:center" class=" col-6">
-                        <button style="width:90%" id="loadprev" onclick="selectAction('loadprev')" class="btn btn-primary">Load and Prev</button>
-                    </div> 
-                    <div style="text-align:center" class=" col-6">
-                        <button style="width:90%" id="saverun" onclick="selectAction('saverun')" class="btn btn-primary">Save and Run</button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div style="text-align:center" class=" col-4">
-                        <button style="width:90%" id="exec"  onclick="exec()" class="btn btn-primary">Exec</button>
-                    </div>
-                </div>
-            -->
-            </div>
-        </div> 
-    </div>
-    <script id="script" type="text/javascript">
-
-    </script></div>
-</body> 
+            <script id="script" type="text/javascript">
+            </script>
+        </div>
+    </body>     
 </html>

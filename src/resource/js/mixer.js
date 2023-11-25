@@ -1,3 +1,4 @@
+//DECLARATION
 var channelSelected= 0;
 var channelLive= 0;
 var socket = io(); 
@@ -6,6 +7,7 @@ var selectedAction = null;
 var loadprev=false;
 var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
 var hydra = new Hydra({ detectAudio: true, canvas: document.getElementById("hydra-canvas"), });
+var channelMixer = []; 
 hydra.setResolution(1920, 1080);
 a.show();
 a.setBins(6);
@@ -20,23 +22,86 @@ var js = CodeMirror.fromTextArea(document.getElementById("codejs"), {
   mode: {name: "javascript", globalVars: true}
 }); 
 
+//END DECLARATION
 
+//FUNCTION INIT TO CALL AT THE START OF THE PAGE
+function initializeChannel(variable){
+  const firstInitRetrive = new Promise((resolve, reject) => {
+    document.getElementById("multychannel").innerHTML ="";
+    channelMixer = variable;
+    var html= "<div class=\"row spacingRowa\" >";
+    var i=1;
+    for (let index = 0; index < channelMixer.length; index++) {
+      const element = channelMixer[index];
+      html +=
+      "<div style=\"text-align:center\" class=\" col-3 \"  >"+
+      "<button style=\"width:90%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\" "+
+      "id=\""+element.id+"\" onclick=\"selectChannelLoad('"+element.id+"')\" class=\"btn btn-primary\" title=\""+element.name+"\" >"+
+        element.name+
+      "</button>"+
+      "</div>"
+      if( (i>0 && i % 4 == 0 )|| i === channelMixer.length ){
+        html +=" </div>"
+      }
+      if( (i>0 && i % 4 == 0 )&& i !== channelMixer.length ){
+        html +=" <div class=\"row spacingRowa\" >"
+      }
+      if(  i === channelMixer.length ){
+        document.getElementById("multychannel").innerHTML +=html
+      }
+      i++;
+    }
+    socket.on('connect', function() {
+    });  
+    var element = document.getElementById(channelSelected+"");
+    if(element)
+      element.classList.add("selectedChannel");
+    resolve(channelMixer);
+    
+  });
+  return firstInitRetrive;
+}
+
+//RETRIVE CHANNEL IN LIVE
+socket.on('get_in_load', function(variable) {
+  var element = document.getElementById(variable+"");
+  if(element)
+    element.classList.add("liveChannel");
+  channelLive=parseInt(channel);
+});
+
+
+//RETRIVE GETCHANNEL
 socket.on('get_channel', function(variable) {
   showChannelLive(variable.id); 
 });
 
-socket.on('get_code', function(variable) {
-  var code = variable;   
+//RETRIVE CHANNEL BY FIND CHANNEL
+socket.on('find_channel', function(variable) {
+  var code = variable.code;   
   js.getDoc().setValue(code);
   if(loadprev){
     prev();
     loadprev=false;
   }
+  if(!variable.name){
+    variable.name=variable.id;
+  }
+  document.getElementById('channelName').value = variable.name+"";
 });
- 
+
+
+//RETRIVE CHANNELS BY GET ALL
+socket.on('get_all', function(variable) {
+  
+  initializeChannel(variable).then(data=>{
+    autosave();
+    socket.emit('get_in_load'); 
+  })
+});
 
 var load = function(){
-  socket.emit('get_code', channelSelected); 
+  socket.emit('find_channel', channelSelected); 
   console.log("load channel "+channelSelected);
 }
 
@@ -64,12 +129,19 @@ var prev = function () {
 
 var save = function () { 
     var jsx = js.getValue();
+    var name =  document.getElementById('channelName').value;
+    if(!name){
+      name=channelSelected;
+    }
     var channel = {
       id: channelSelected,
-      code: jsx
+      code: jsx,
+      name:name
     }
+    document.getElementById(channelSelected).innerText = name;
+    document.getElementById(channelSelected).title = name;
     socket.emit('save_channel', channel);  
-    console.log("Save channel "+channel.id);
+    console.log("Save channel "+channel.id); 
 }
 var autosave= function(){
   var element = document.getElementById("Autosave"); 
@@ -104,6 +176,7 @@ var selectChannelLoad= function(channel){
   var element = document.getElementById(channel);
   if(element)
     element.classList.add("selectedChannel");
+    
   channelSelected=parseInt(channel);
   loadprev=true;
   load(); 
@@ -171,10 +244,10 @@ var selectActionExec = function(action){
   exec();
 }
 
+
+
 var init = function(){
-  socket.on('connect', function() { 
-  }); 
-  selectChannelLoad(0);
+  socket.emit('get_all'); 
 }
 
 init();
