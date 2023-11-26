@@ -62,12 +62,21 @@ button{
     background-color: white !important;
     color: #740000;
 }
-
+.navbar-custom {
+    z-index: 99;
+    height: 100%;
+}
 div.height100 {
     height: 100%;
 }
 div.height90 {
     height: 90%;
+}
+div.height97 {
+    height: 97%;
+}
+div.height3 {
+    height: 3%;
 }
 .CodeMirror{
     min-height: 100%;

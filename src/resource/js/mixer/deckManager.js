@@ -1,6 +1,6 @@
 
-import { run,prev,save,load,setLoadprev,selectChannelLoad,autosave} from "./mixerManager.js";
-import { emit } from "./emitterManager.js";
+import { run,prev,save,load,setLoadprev,selectChannelLoad,autosave,initMixer} from "./mixerManager.js";
+
 
 var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
 
@@ -29,7 +29,7 @@ var selectActionExec = function (selectedAction) {
 
 
 var init = function(){
-  emit('get_all');
+  initMixer();
   window.selectChannelLoad =selectChannelLoad;
   window.selectActionExec = selectActionExec;
   window.autosave = autosave;

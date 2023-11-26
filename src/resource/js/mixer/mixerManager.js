@@ -1,6 +1,6 @@
 
 
-import { emit } from "./emitterManager.js";
+import { emit } from "./mixerEmitter.js";
 
 
 
@@ -138,3 +138,7 @@ export function selectChannelLoad(channel) {
   load();
 }
 
+
+export function initMixer(){
+  emit('get_all');
+}
