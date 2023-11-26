@@ -107,6 +107,14 @@ filesJs.forEach(file => {
     });  
 });
 
+var filesJsMixer = fs.readdirSync('./src/resource/js/mixer/');
+filesJsMixer.forEach(file => {  
+    console.log("/src/resource/js/mixer/"+file);
+    app.get("/src/resource/js/"+file, (request, response) => { 
+        response.sendFile(file , { root: './src/resource/js/mixer/' }) 
+    });  
+});
+
 //START LISTENING FOR CHANNEL CHANGE
 var channelLive =  0; //default
 var channelShow =  0; //default

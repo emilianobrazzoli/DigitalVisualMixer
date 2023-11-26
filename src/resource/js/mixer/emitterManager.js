@@ -42,7 +42,7 @@ socket.on('get_all', function (variable) {
 
 function emit(emitter, arg){
     const emitPromise = new Promise((resolve, reject) => {
-        if(arg){
+        if(arg  !== 'undefined'){
             socket.emit(emitter, arg); 
 
         }else{
