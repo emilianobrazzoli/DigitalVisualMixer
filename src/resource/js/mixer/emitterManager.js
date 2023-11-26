@@ -1,4 +1,9 @@
 
+
+import { 
+    initializeChannel, showChannelLive,  
+    setChannelSelected, setLoadprev, prev,
+    autosave, channelSelected, loadprev} from "./mixerManager.js";
 var socket = io(); 
 
 //RETRIVE CHANNEL IN LIVE
@@ -7,7 +12,7 @@ socket.on('get_in_load', function (variable) {
     if (element)
         element.classList.add("liveChannel");
     if(channelSelected)
-    channelSelected = parseInt(channel);
+        setChannelSelected(  parseInt(channel));
 });
 
 
@@ -22,7 +27,7 @@ socket.on('find_channel', function (variable) {
     js.getDoc().setValue(code);
     if (loadprev) {
         prev();
-        loadprev = false;
+        setLoadprev(false) ;
     }
     if (!variable.name) {
         variable.name = variable.id;
@@ -40,7 +45,7 @@ socket.on('get_all', function (variable) {
     })
 });
 
-function emit(emitter, arg){
+export function emit(emitter, arg){
     const emitPromise = new Promise((resolve, reject) => {
         if(arg  !== 'undefined'){
             socket.emit(emitter, arg); 
