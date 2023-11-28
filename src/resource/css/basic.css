@@ -107,3 +107,8 @@ div.height3 {
 .button-channel{
     
 }
+
+#codejs{
+    max-height: 100%;
+    overflow-y: auto;
+}

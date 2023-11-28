@@ -1,6 +1,9 @@
 
 import { run,prev,save,load,setLoadprev,selectChannelLoad,autosave,initMixer} from "./mixerManager.js";
 
+import { initMirror } from "./rollupBundle/codeMirrorManager.js";
+
+import { initMacro } from "./macroManager.js";
 
 var apiLink = 'https:/'+'/hydra.ojack.xyz/api/';
 
@@ -30,6 +33,8 @@ var selectActionExec = function (selectedAction) {
 
 var init = function(){
   initMixer();
+  initMirror();
+  initMacro();
   window.selectChannelLoad =selectChannelLoad;
   window.selectActionExec = selectActionExec;
   window.autosave = autosave;

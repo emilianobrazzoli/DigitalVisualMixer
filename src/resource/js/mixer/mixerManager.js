@@ -1,5 +1,6 @@
 
 
+import { reinit, getDoc } from "./rollupBundle/codeMirrorManager.js";
 import { emit } from "./mixerEmitter.js";
 
 
@@ -72,10 +73,10 @@ export function prev() {
   if (document.getElementById('chalfunction')) {
     document.getElementById('chalfunction').remove();
   }
-  var jsx = js.getValue();
+  var jsx = getDoc();
   if (!jsx) {
     jsx = "hush();\nresetAudioAndSpeed();\ns0.initImage(\"./src/resource/img/alpha.png\");\nsrc(s0).out(o0);\nrender(o0);"
-    js.getDoc().setValue(jsx);
+    reinit(jsx);
   }
   var s = document.createElement('script');
   s.setAttribute("id", "chalfunction");
@@ -84,7 +85,7 @@ export function prev() {
 };
 
 export function save() {
-  var jsx = js.getValue();
+  var jsx = getDoc();
   var name = document.getElementById('channelName').value;
   if (!name) {
     name = channelSelected;

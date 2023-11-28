@@ -8,7 +8,16 @@ import { fileURLToPath } from 'url';
 import { searchChannel, saveChannel, getAll }  from './manager.js' 
 import { createServer } from "http";
 import { Server } from "socket.io";
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
+export default {
+    input: 'src/index.js',
+    output: {
+      dir: 'output',
+      format: 'cjs'
+    },
+    plugins: [nodeResolve()]
+  };
 
 //INIT ENV VAR
 const app = express();  
@@ -23,15 +32,9 @@ var port = process.env.PORT || 8080;
 var token = process.env.TOKEN || '';
 app.use(express.static(__dirname + '/dist/'));
 
-//LOAD MODULE  
-app.get("/mode/javascript/javascript.js", (request, response) => { 
-    response.sendFile('javascript.js' , { root: './node_modules/codemirror/mode/javascript/' }) 
-});  
-app.get("/lib/codemirror.css", (request, response) => { 
-    response.sendFile('codemirror.css' , { root: './node_modules/codemirror/lib/' }) 
-});  
-app.get("/lib/codemirror.js", (request, response) => { 
-    response.sendFile('codemirror.js' , { root: './node_modules/codemirror/lib/' }) 
+//LOAD MODULE   
+app.get("/src/resource/js/lib/codemirror.js", (request, response) => { 
+    response.sendFile('index.js' , { root: './node_modules/codemirror/dist/' }) 
 });   
 app.get("/dist/hydra-synth.js", (request, response) => { 
     response.sendFile('hydra-synth.js' , { root: './node_modules/hydra-synth/dist/' }) 
@@ -42,13 +45,7 @@ app.get("/dist/bootstrap.min.css", (request, response) => {
 app.get("/dist/bootstrap.min.css.map", (request, response) => { 
     response.sendFile('bootstrap.min.css.map' , { root: './node_modules/bootstrap/dist/css/' }) 
 });  
-
-var themeCss = fs.readdirSync('./node_modules/codemirror/theme');
-themeCss.forEach(file => {   
-    app.get("/theme/"+file, (request, response) => { 
-        response.sendFile(file , { root: './node_modules/codemirror/theme/' }) 
-    });  
-});
+ 
 
 var filesJs = fs.readdirSync('./src/resource/addon/');
 filesJs.forEach(file => {  
@@ -61,9 +58,10 @@ filesJs.forEach(file => {
 //LOAD ASSETS
 app.use('/src/assets', express.static(__dirname + '/src/assets/')); 
 
-//LOAD HOMEPAGE ON MAIN LOCALHOST:8080
+//LOAD HOMEPAGE ON MAIN LOCALHOST:8080 
+
 app.get("/", (request, response) => { 
-    response.sendFile('home.html' , { root: './src/resource/html/' }) 
+    response.sendFile('mixer.html' , { root: './src/resource/html/' }) 
 });  
 
 //LOAD FAVICON
@@ -112,6 +110,14 @@ filesJsMixer.forEach(file => {
     console.log("/src/resource/js/mixer/"+file);
     app.get("/src/resource/js/"+file, (request, response) => { 
         response.sendFile(file , { root: './src/resource/js/mixer/' }) 
+    });  
+});
+
+var filesJsRollupBundle = fs.readdirSync('./rollupBundle/');
+filesJsRollupBundle.forEach(file => {  
+    console.log("/rollupBundle/"+file);
+    app.get("/src/resource/js/rollupBundle/"+file, (request, response) => { 
+        response.sendFile(file , { root: './rollupBundle/' }) 
     });  
 });
 

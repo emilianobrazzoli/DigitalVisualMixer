@@ -1,9 +1,13 @@
 
-document.onkeyup = function(e) {
-    if (e.ctrlKey  && e.shiftKey && e.key === "Enter") {
+export function initMacro() {
+
+
+  document.onkeyup = function (e) {
+    if (e.ctrlKey && e.shiftKey && e.key === "Enter") {
       selectActionExec('prev');
     }
-    if (e.ctrlKey  && e.shiftKey && e.key === "S") {
+    if (e.ctrlKey && e.shiftKey && e.key === "S") {
       save();
     }
   };
+}

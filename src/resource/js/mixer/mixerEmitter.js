@@ -1,5 +1,6 @@
 
 
+import { reinit, getDoc } from "./rollupBundle/codeMirrorManager.js";
 import { 
     initializeChannel, showChannelLive,  
     setChannelSelected, setLoadprev, prev,
@@ -24,7 +25,7 @@ socket.on('get_channel', function (variable) {
 //RETRIVE CHANNEL BY FIND CHANNEL
 socket.on('find_channel', function (variable) {
     var code = variable.code;
-    js.getDoc().setValue(code);
+    reinit(code); 
     if (loadprev) {
         prev();
         setLoadprev(false) ;
