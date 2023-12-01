@@ -26262,7 +26262,7 @@ function cursorTooltip() {
   return [cursorTooltipField]
 }
 
-
+var modalEditor ="";
 var view = new EditorView({
   doc: "console.log('hello')\n",
   extensions: [
@@ -26286,7 +26286,27 @@ function reinit(value) {
 function getDoc() {
   return view.state.doc.toString();
 }
-
+function getDocModalMirror() {
+  return modalEditor.state.doc.toString();
+}
+function modalMirror(code, updateListenerFunc ){
+  let updateListenerExtension = EditorView.updateListener.of((update) => {
+    if (update.docChanged) {
+      updateListenerFunc();
+    }
+  });
+  modalEditor = new EditorView({
+    doc: code,
+    extensions: [
+      updateListenerExtension,
+      basicSetup,
+      keymap.of([indentWithTab]),
+      cursorTooltip(),
+      javascript()
+    ],
+    parent: document.getElementById("ModalMirror")
+  });  
+}
 function insertText(text) {
   view.dispatch({
     changes: {
@@ -26294,12 +26314,11 @@ function insertText(text) {
       to: prevRange.to,
       insert: text
     },
-    selection: {anchor: prevRange.from +  prevRange.to}
+    selection: {anchor: prevRange.from + 1}
   });
 }
 function initMirror() {
-  getDoc();
   window.insertText = insertText;
 }
 
-export { getDoc, initMirror, insertText, reinit };
+export { getDoc, getDocModalMirror, initMirror, insertText, modalMirror, reinit };

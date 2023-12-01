@@ -2,6 +2,7 @@
 
 import { reinit, getDoc } from "./rollupBundle/codeMirrorManager.js";
 import { emit } from "./mixerEmitter.js";
+import { refreshHydra } from "./hydraManager.js";
 
 
 
@@ -70,18 +71,14 @@ export function run() {
 }
 
 export function prev() {
-  if (document.getElementById('chalfunction')) {
-    document.getElementById('chalfunction').remove();
-  }
+
+  
   var jsx = getDoc();
   if (!jsx) {
     jsx = "hush();\nresetAudioAndSpeed();\ns0.initImage(\"./src/resource/img/alpha.png\");\nsrc(s0).out(o0);\nrender(o0);"
     reinit(jsx);
   }
-  var s = document.createElement('script');
-  s.setAttribute("id", "chalfunction");
-  s.textContent = jsx;//inne
-  document.body.appendChild(s);
+  refreshHydra(jsx);
 };
 
 export function save() {

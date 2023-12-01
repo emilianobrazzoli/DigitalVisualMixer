@@ -1,6 +1,6 @@
 
 
-import { reinit, getDoc } from "./rollupBundle/codeMirrorManager.js";
+import { reinit } from "./rollupBundle/codeMirrorManager.js";
 import { 
     initializeChannel, showChannelLive,  
     setChannelSelected, setLoadprev, prev,
