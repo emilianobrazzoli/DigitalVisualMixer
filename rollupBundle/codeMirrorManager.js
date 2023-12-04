@@ -26238,7 +26238,8 @@ const autoCloseTags = /*@__PURE__*/EditorView.inputHandler.of((view, from, to, t
     return true;
 });
 
-var prevRange = 0; 
+var prevRange = 0;
+
 const cursorTooltipField = StateField.define({
   create: getCursorTooltips,
 
@@ -26252,7 +26253,6 @@ const cursorTooltipField = StateField.define({
 
 function getCursorTooltips(state) {
   return state.selection.ranges
-    .filter(range => range.empty)
     .map(range => {
       prevRange = range;
     })
@@ -26262,7 +26262,7 @@ function cursorTooltip() {
   return [cursorTooltipField]
 }
 
-var modalEditor ="";
+var modalEditor = "";
 var view = new EditorView({
   doc: "console.log('hello')\n",
   extensions: [
@@ -26289,7 +26289,7 @@ function getDoc() {
 function getDocModalMirror() {
   return modalEditor.state.doc.toString();
 }
-function modalMirror(code, updateListenerFunc ){
+function modalMirror(code, updateListenerFunc) {
   let updateListenerExtension = EditorView.updateListener.of((update) => {
     if (update.docChanged) {
       updateListenerFunc();
@@ -26301,22 +26301,37 @@ function modalMirror(code, updateListenerFunc ){
       updateListenerExtension,
       basicSetup,
       keymap.of([indentWithTab]),
-      cursorTooltip(),
       javascript()
     ],
     parent: document.getElementById("ModalMirror")
-  });  
+  });
 }
+
 function insertText(text) {
+  if( prevRange.from==prevRange.to)
   view.dispatch({
     changes: {
       from: prevRange.from,
       to: prevRange.to,
       insert: text
     },
-    selection: {anchor: prevRange.from + 1}
+    selection: { anchor: prevRange.from + 1 }
   });
+  else {
+    var match = getDoc();
+    var taxt2=  match.substring(0, prevRange.from) +text+match.substring( prevRange.to) ;
+    view.dispatch({
+      changes: {
+        from: 0,
+        to: match.length,
+        insert: taxt2
+      },
+      selection: { anchor: 0 + 1 }
+    });
+  }
+
 }
+
 function initMirror() {
   window.insertText = insertText;
 }
