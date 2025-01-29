@@ -58,6 +58,11 @@ button {
     border: 2px solid #ac0000 !important;
     border-radius: 0% !important;
 }
+.liveChannelAutosave {
+    background: #740000 !important;
+    border: 2px solid #ac0000 !important;
+    border-radius: 0% !important;
+}
 
 .liveChannel.selectedChannel {
     background-color: white !important;

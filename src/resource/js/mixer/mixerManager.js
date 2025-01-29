@@ -8,7 +8,7 @@ import { refreshHydra } from "./hydraManager.js";
 
 var channelMixer = []; 
 var channelLive= 0;
-var isautosave = false; 
+export var isautosave = false; 
 
 
 export var loadprev=false;
@@ -102,9 +102,9 @@ export function autosave() {
   isautosave = !isautosave;
   if (element) {
     if (isautosave) {
-      element.classList.add("liveChannel");
+      element.classList.add("liveChannelAutosave");
     } else {
-      element.classList.remove("liveChannel");
+      element.classList.remove("liveChannelAutosave");
     }
   }
 }

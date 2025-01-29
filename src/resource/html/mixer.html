@@ -49,7 +49,7 @@
                     Visual Deck
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonOption">
-                    <li><a class="dropdown-item" onclick="autosave()" id="Autosave">Autosave</a></li>
+                    <li><a class="dropdown-item" onclick="autosave()" id="Autosave" >Autosave</a></li>
                     <li><a class="dropdown-item" onclick="selectActionExec('save')" >Save</a></li>
                     <li><a class="dropdown-item" onclick="selectActionExec('saverun')" >Save and Run</a></li> 
                     <li><a class="dropdown-item" 
@@ -111,10 +111,11 @@
           </div>
           <div class="row">
             <div class=" tv col-12">
-              <canvas id="hydra-canvas" style="
+              <canvas id="hydra-canvas"  
+              style="imageRendering:pixelated;
                             width: 100%;
                             height: 100%;  
-                            aspect-ratio: auto 100 / 80;"> </canvas>
+                            aspect-ratio: auto 1920 / 929;"> </canvas>
             </div>
           </div>
 
