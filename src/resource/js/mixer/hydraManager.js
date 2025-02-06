@@ -12,6 +12,16 @@ function refreshHydra(jsx) {
     s.textContent = jsx;//inne
     document.body.appendChild(s);
 }
+function refreshHydraWithTransiction(source1, source2, transitction) {
+
+    if (document.getElementById('chalfunction')) {
+        document.getElementById('chalfunction').remove();
+    }
+    var s = document.createElement('script');
+    s.setAttribute("id", "chalfunction");
+    s.textContent = source1+"."+transitction+"("+source2+"()=i++).out";//inne
+    document.body.appendChild(s);
+}
 function resetAudioAndSpeed() {
     a.setScale(10)
     a.setBins(6)

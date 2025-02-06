@@ -10,6 +10,9 @@ var channelMixer = [];
 var channelLive= 0;
 export var isautosave = false; 
 
+var transictions = [];
+var transictionSelected =0;
+export var isTransictionSelected= true;
 
 export var loadprev=false;
 export var channelSelected= 0;
@@ -96,6 +99,9 @@ export function save() {
   document.getElementById(channelSelected).title = name;
   emit('save_channel', channel);
   console.log("Save channel " + channel.id);
+}
+export function sequence(){
+
 }
 export function autosave() {
   var element = document.getElementById("Autosave");

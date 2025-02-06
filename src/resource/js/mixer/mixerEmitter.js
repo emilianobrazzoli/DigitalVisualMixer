@@ -22,6 +22,11 @@ socket.on('get_channel', function (variable) {
     showChannelLive(variable.id);
 });
 
+
+socket.on('set_channel', function(variable) {
+    showChannelLive(variable.id);
+});
+
 //RETRIVE CHANNEL BY FIND CHANNEL
 socket.on('find_channel', function (variable) {
     var code = variable.code;
