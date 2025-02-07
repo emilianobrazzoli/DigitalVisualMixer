@@ -1,6 +1,6 @@
 
 import { insertText, modalMirror, getDocModalMirror } from "./rollupBundle/codeMirrorManager.js";
-
+import { elementHydraJson } from "./code.js"
 import { prev } from "./mixerManager.js";
 import { ModalPanel } from "./modalManager.js";
 
@@ -134,59 +134,113 @@ function findInJsonById(id) {
   });
   return returnState;
 }
+
+var elementHydra = elementHydraJson();
 var functionJson = [{
   "id": "source", "title":"Source", "data":
     [
-      { "id": "noise", "title": "Noise", "code": "noise( scale = 10, offset = 0.1 ).out()" },
-      { "id": "voronoi", "title": "Voronoi", "code": "voronoi( scale = 5, speed = 0.3, blending = 0.3 ).out()" },
-      { "id": "osc", "title": "Osc", "code": "osc( frequency = 60, sync = 0.1, offset=1 ).out()" },
-      { "id": "shape", "title": "Shape", "code": "shape( sides = 3, radius = 0.3, smoothing = 0.01 ).out()" },
-      { "id": "gradient", "title": "Gradient", "code": "gradient( speed=0.5 ).out()" },
-      { "id": "src", "title": "Src", "code": "src( output =o0).modulate(noise(3),0.005).blend(shape(4),0.01).out(o0)" },
-      { "id": "solid", "title": "Solid", "code": "solid( r=0.3, g=0.3, b=0.5, a = 1 ).out()" }
+      { "id": "noise", "title": "Noise", "code":  elementHydra.noise.example[0].code },
+      { "id": "voronoi", "title": "Voronoi", "code":  elementHydra.voronoi.example[0].code },
+      { "id": "osc", "title": "Osc", "code":  elementHydra.osc.example[0].code },
+      { "id": "shape", "title": "Shape", "code":  elementHydra.shape.example[0].code },
+      { "id": "gradient", "title": "Gradient", "code":  elementHydra.gradient.example[0].code },
+      { "id": "src", "title": "Src", "code":  elementHydra.src.example[0].code },
+      { "id": "solid", "title": "Solid", "code":  elementHydra.solid.example[0].code }
     ]
 },{
   "id": "geometry", "title":"Geometry", "data":
     [
-      { "id": "rotate", "title": "Rotate", "code": "osc(50).rotate( angle = 10, speed=1 ).out(o0)" },
-      { "id": "scale", "title": "Scale", "code": "shape().scale(amount=1.5,xMult=[0.25,0.5].fast(0.25),yMult=1, offsetX = 0.5, offsetY = 0.5).out(o0)" },
-      { "id": "pixelate", "title": "Pixelate", "code": "noise().pixelate( pixelX = 20, pixelY = 20 ).out(o0)" },
-      { "id": "repeat", "title": "Repeat", "code": "shape().repeat( repeatX = 3, repeatY = 3, offsetX=0, offsetY=0 ).out()" },
-      { "id": "repeatX", "title": "RepeatX", "code": "shape().repeatX(reps = 3, offset=0).out()" },
-      { "id": "repeatY", "title": "RepeatY", "code": "shape().repeatY( reps = 3, offset=0 ).out()" },
-      { "id": "kaleid", "title": "Kaleid", "code": "osc(25,-0.1,0.5).kaleid(nSides=50).out(o0)" },
-      { "id": "scroll", "title": "Scroll", "code": "shape(3).scroll( scrollX = 0.5, scrollY = 0.5, speedX=0, speedY=0 ).out(o0)" },
-      { "id": "scrollX", "title": "ScrollX", "code": "shape(3).scrollX( scrollX = 0.5, speedX=0).out(o0)" },
-      { "id": "scrollY", "title": "ScrollY", "code": "shape(3).scrollY( scrollY = 0.5, speedY=0 ).out(o0)" }
+      { "id": "rotate", "title": "Rotate", "code": elementHydra.rotate.example[0].code },
+      { "id": "scale", "title": "Scale", "code": elementHydra.scale.example[0].code },
+      { "id": "pixelate", "title": "Pixelate", "code": elementHydra.pixelate.example[0].code },
+      { "id": "repeat", "title": "Repeat", "code": elementHydra.repeat.example[0].code },
+      { "id": "repeatX", "title": "RepeatX", "code": elementHydra.repeatX.example[0].code },
+      { "id": "repeatY", "title": "RepeatY", "code": elementHydra.repeatY.example[0].code },
+      { "id": "kaleid", "title": "Kaleid", "code": elementHydra.kaleid.example[0].code },
+      { "id": "scroll", "title": "Scroll", "code": elementHydra.scroll.example[0].code },
+      { "id": "scrollX", "title": "ScrollX", "code": elementHydra.scrollX.example[0].code },
+      { "id": "scrollY", "title": "ScrollY", "code": elementHydra.scrollY.example[0].code }
     ]
 },{
   "id": "Color", "title":"Color", "data":
     [
-      { "id": "Posterize", "title": "Posterize", "code": "gradient(0).posterize( bins = [1, 5, 15, 30] , gamma =0.5 ).out(o0)" },
-      { "id": "Shift", "title": "Shift", "code": "osc().shift(r = 0.5, g=0.9, b=0.3, a=0).out()" },
-      { "id": "Invert", "title": "Invert", "code": "solid(1,1,1).invert(amount = [0,1]).out(o0)" },
-      { "id": "Contrast", "title": "Contrast", "code": "osc(20).contrast( amount = (() => Math.sin(time) * 5)).out(o0)" },
-      { "id": "Brightness", "title": "Brightness", "code": "osc(20,0,2).brightness( amount=(() => Math.sin(time) )).out(o0)" },
-      { "id": "Luma", "title": "Luma", "code": "osc(10,0,1).luma(threshold = 0.5, tolerance = 0.1).out(o0)" },
-      { "id": "Thresh", "title": "Thresh", "code": "noise(3,0.1).thresh(threshold = 0.5, tolerance = 0.04).out(o0)" },
-      { "id": "Color", "title": "Color", "code": "osc().color( r = 1, g = 0, b = 3, a = 1 ).out(o0)" },
-      { "id": "Saturate", "title": "Saturate", "code": "osc(10,0,1).saturate(  amount =() => Math.sin(time) * 10 ).out(o0)" },
-      { "id": "Hue", "title": "Hue", "code": "osc(30,0.1,1).hue(hue =() => Math.sin(time)).out(o0)" },
-      { "id": "Colorama", "title": "Colorama", "code": "osc(20).color([1,0,0,1,0],[0,1,0,1,0],[0,0,1,1,0]).colorama( amount = 0.005 ).out(o0)" }
+      { "id": "Posterize", "title": "Posterize", "code":  elementHydra.posterize.example[0].code },
+      { "id": "Shift", "title": "Shift", "code":  elementHydra.shift.example[0].code },
+      { "id": "Invert", "title": "Invert", "code":  elementHydra.invert.example[0].code },
+      { "id": "Contrast", "title": "Contrast", "code":  elementHydra.contrast.example[0].code },
+      { "id": "Brightness", "title": "Brightness", "code":  elementHydra.brightness.example[0].code },
+      { "id": "Luma", "title": "Luma", "code":  elementHydra.luma.example[0].code },
+      { "id": "Thresh", "title": "Thresh", "code":  elementHydra.thresh.example[0].code },
+      { "id": "Color", "title": "Color", "code":  elementHydra.color.example[0].code },
+      { "id": "Saturate", "title": "Saturate", "code":  elementHydra.saturate.example[0].code },
+      { "id": "Hue", "title": "Hue", "code":  elementHydra.hue.example[0].code},
+      { "id": "Colorama", "title": "Colorama", "code":  elementHydra.colorama.example[0].code }
     ]
 },{
   "id": "Blend", "title":"Blend", "data":
     [
-      { "id": "Add", "title": "Add", "code": "shape().scale(0.5).add( texture =shape(4),amount =[0,0.25,0.5,0.75,1]).out(o0)" },
-      { "id": "Sub", "title": "sub", "code": "osc().sub(texture=osc(6), amount = 1).out(o0)" },
-      { "id": "Layer", "title": "Layer", "code": "osc(30).layer(texture=osc(15).rotate(1).luma()).out(o0)" },
-      { "id": "Blend", "title": "Blend", "code": "osc(9,0.1,1).blend(texture=osc(13,0.5,5),amount = 0.5).out()" },
-      { "id": "Mult", "title": "Mult", "code": "osc().layer(osc(30,0.1,2).mult( texture=shape(4), amount = 1)).out(o0)" },
-      { "id": "Diff", "title": "Diff", "code": "osc(9,0.1,1).diff(texture=osc(13,0.5,5)).out(o0)" },
-      { "id": "Mask", "title": "Mask", "code": "osc().layer(osc(30,0.1,2).mask(texture=shape(4))).out(o0)" }
+      { "id": "Add", "title": "Add", "code": elementHydra.add.example[0].code },
+      { "id": "Sub", "title": "sub", "code": elementHydra.sub.example[0].code },
+      { "id": "Layer", "title": "Layer", "code": elementHydra.layer.example[0].code },
+      { "id": "Blend", "title": "Blend", "code": elementHydra.blend.example[0].code },
+      { "id": "Mult", "title": "Mult", "code": elementHydra.mult.example[0].code },
+      { "id": "Diff", "title": "Diff", "code": elementHydra.diff.example[0].code },
+      { "id": "Mask", "title": "Mask", "code": elementHydra.mask.example[0].code }
+    ]
+},{
+  "id": "Modulate", "title":"Modulate", "data":
+    [ 
+      { "id": "modulateRepeat", "title": "modulateRepeat", "code": elementHydra.modulateRepeat.example[0].code },
+      { "id": "modulateKaleid", "title": "modulateKaleid", "code": elementHydra.modulateKaleid.example[0].code },
+      { "id": "modulateScrollX", "title": "modulateScrollX", "code": elementHydra.modulateScrollX.example[0].code },
+      { "id": "modulate", "title": "modulate", "code": elementHydra.modulate.example[0].code },
+      { "id": "modulateScale", "title": "modulateScale", "code": elementHydra.modulateScale.example[0].code },
+      { "id": "modulateHue", "title": "modulateHue", "code": elementHydra.modulateHue.example[0].code }
+    ]
+},{
+  "id": "External", "title":"External", "data":
+    [
+      { "id": "initCam", "title": "initCam", "code": elementHydra.initCam.example[0].code },
+      { "id": "initImage", "title": "initImage", "code": elementHydra.initImage.example[0].code },
+      { "id": "initVideo", "title": "initVideo", "code": elementHydra.initVideo.example[0].code },
+      { "id": "init", "title": "init", "code": elementHydra.init.example[0].code },
+      { "id": "modulateScale", "title": "modulateScale", "code": elementHydra.modulateScale.example[0].code },
+      { "id": "initScreen", "title": "initScreen", "code": elementHydra.initScreen.example[0].code }
+    ]
+},{
+  "id": "Synth", "title":"Synth", "data":
+    [
+      { "id": "render", "title": "render", "code": elementHydra.render.example[0].code },
+      { "id": "update", "title": "update", "code": elementHydra.update.example[0].code },
+      { "id": "hush", "title": "hush", "code": elementHydra.hush.example[0].code },
+      { "id": "setFunction", "title": "init", "code": elementHydra.setFunction.example[0].code },
+      { "id": "speed", "title": "modulateScale", "code": elementHydra.speed.example[0].code },
+      { "id": "bpm", "title": "bpm", "code": elementHydra.bpm.example[0].code },
+      { "id": "width", "title": "width", "code": elementHydra.width.example[0].code },
+      { "id": "height", "title": "height", "code": elementHydra.height.example[0].code },
+      { "id": "time", "title": "time", "code": elementHydra.time.example[0].code },
+      { "id": "mouse", "title": "mouse", "code": elementHydra.mouse.example[0].code }
+    ]
+},{
+  "id": "Array", "title":"Array", "data":
+    [
+      { "id": "fast", "title": "fast", "code": elementHydra.fast.example[0].code },
+      { "id": "smooth", "title": "smooth", "code": elementHydra.smooth.example[0].code },
+      { "id": "ease", "title": "ease", "code": elementHydra.ease.example[0].code },
+      { "id": "offset", "title": "offset", "code": elementHydra.offset.example[0].code },
+      { "id": "fit", "title": "fit", "code": elementHydra.fit.example[0].code }
+    ]
+}/*,{
+  "id": "Audio", "title":"Audio", "data":
+    [
+      { "id": "fft", "title": "fft", "code": elementHydra.fft.example[0].code },
+      { "id": "setSmooth", "title": "setSmooth", "code": elementHydra.setSmooth.example[0].code },
+      { "id": "setCutoff", "title": "setCutoff", "code": elementHydra.setCutoff.example[0].code },
+      { "id": "setBins", "title": "setBins", "code": elementHydra.setBins.example[0].code },
+      { "id": "setScale", "title": "setScale", "code": elementHydra.setScale.example[0].code }
     ]
 }
-
+*/
 ]
 
 
@@ -198,7 +252,7 @@ function initFunction() {
 
       html += `<li>
         <a class="dropdown-item" href="#">
-        `+element.title+`Source &raquo;
+        `+element.title+` &raquo;
         </a>
         <ul class="dropdown-menu dropdown-submenu">`;
       element.data.forEach(element => {
