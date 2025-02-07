@@ -230,7 +230,7 @@ var functionJson = [{
       { "id": "offset", "title": "offset", "code": elementHydra.offset.example[0].code },
       { "id": "fit", "title": "fit", "code": elementHydra.fit.example[0].code }
     ]
-}/*,{
+}/**/,{
   "id": "Audio", "title":"Audio", "data":
     [
       { "id": "fft", "title": "fft", "code": elementHydra.fft.example[0].code },
@@ -240,7 +240,7 @@ var functionJson = [{
       { "id": "setScale", "title": "setScale", "code": elementHydra.setScale.example[0].code }
     ]
 }
-*/
+
 ]
 
 
