@@ -2,7 +2,7 @@
 
 import { reinit } from "./rollupBundle/codeMirrorManager.js";
 import { 
-    initializeChannel, showChannelLive,  
+    initializeChannel, showChannelLive,
     setChannelSelected, setLoadprev, prev,
     autosave, channelSelected, loadprev} from "./mixerManager.js";
 var socket = io(); 

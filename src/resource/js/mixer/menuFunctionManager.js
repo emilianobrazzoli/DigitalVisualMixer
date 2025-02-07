@@ -55,6 +55,46 @@ function getCodeModal() {
   prev();
   return getDocModalMirror();
 }
+export function showMacro(){
+  
+  var html =
+  `<div class="overflow-y-auto w-50-ns w-100 w-100-m h-100 db">
+<div class="pa2">
+  <div class="w-100 flex justify-center">
+    <div class="pa4">
+      <div> Ctrl + Shift + Enter = Preview Code
+      </div>
+    </div>
+  </div> 
+  <div class="w-100 flex justify-center">
+    <div class="pa4">
+      <div> Ctrl + Shift + Left = Run Previus Channel in Live
+      </div>
+    </div>
+  </div> 
+  <div class="w-100 flex justify-center">
+    <div class="pa4">
+      <div> Ctrl + Shift + Right = Run Next Channel in Live
+      </div>
+    </div>
+  </div> 
+  <div class="w-100 flex justify-center">
+    <div class="pa4">
+      <div> Ctrl + Shift + S = Save Code
+      </div>
+    </div>
+  </div> 
+  <div class="w-100 flex justify-center">
+    <div class="pa4">
+      <div>  Shift + R = Run channel in Live
+      </div>
+    </div>
+  </div> 
+</div>
+</div>
+`;
+  new ModalPanel(html, "Deck Macro", "Close", null, "Ok");  
+}
 function sourcefunction(id) {
   var value = findInJsonById(id); 
   var html =

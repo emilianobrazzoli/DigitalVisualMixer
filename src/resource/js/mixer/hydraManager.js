@@ -12,6 +12,8 @@ function refreshHydra(jsx) {
     s.textContent = jsx;//inne
     document.body.appendChild(s);
 }
+
+//da implementare
 function refreshHydraWithTransiction(source1, source2, transitction) {
 
     if (document.getElementById('chalfunction')) {

@@ -60,10 +60,32 @@ export function initializeChannel(variable){
   });
   return firstInitRetrive;
 }
+export function nextRunLive(){
 
+  channelLive++;
+  if(channelLive >=channelMixer.length){
+    channelLive=0;
+  }
+  runChannel(channelLive);
+}
+export function prevRunLive(){
+  
+  channelLive--;
+  if(channelLive <0){
+    channelLive=channelMixer.length-1;
+  }
+  runChannel(channelLive);
+}
 export function load() {
   emit('find_channel', channelSelected);
   console.log("load channel " + channelSelected);
+}
+
+export function runChannel(channel) {
+  emit('set_channel', channel);
+  emit('set_toload', true);
+  showChannelLive(channel);
+  console.log("run channel " + channel);
 }
 
 export function run() {
