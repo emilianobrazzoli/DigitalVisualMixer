@@ -62,31 +62,31 @@ export function showMacro(){
 <div class="pa2">
   <div class="w-100 flex justify-center">
     <div class="pa4">
-      <div> Ctrl + Shift + Enter = Preview Code
+      <div> Ctrl + Enter = Preview Code
       </div>
     </div>
   </div> 
   <div class="w-100 flex justify-center">
     <div class="pa4">
-      <div> Ctrl + Shift + Left = Run Previus Channel in Live
+      <div> Ctrl + Left = Run Previus Channel in Live
       </div>
     </div>
   </div> 
   <div class="w-100 flex justify-center">
     <div class="pa4">
-      <div> Ctrl + Shift + Right = Run Next Channel in Live
+      <div> Ctrl + Right = Run Next Channel in Live
       </div>
     </div>
   </div> 
   <div class="w-100 flex justify-center">
     <div class="pa4">
-      <div> Ctrl + Shift + S = Save Code
+      <div> Ctrl + Up = Save Code
       </div>
     </div>
   </div> 
   <div class="w-100 flex justify-center">
     <div class="pa4">
-      <div>  Shift + R = Run channel in Live
+      <div>  Ctrl +  Down = Run channel in Live
       </div>
     </div>
   </div> 
@@ -97,6 +97,9 @@ export function showMacro(){
 }
 function sourcefunction(id) {
   var value = findInJsonById(id); 
+  var description= "";
+  if(value.description)
+    description= value.description;
   var html =
     `<div class="overflow-y-auto w-50-ns w-100 w-100-m h-100 db">
   <div class="pa2">
@@ -105,6 +108,12 @@ function sourcefunction(id) {
         <div>
         <iframe width="320" height="220" id="myIframe">
         </iframe>
+        </div>
+      </div>
+    </div>
+    <div class="w-100">
+      <div class="w-100">
+        <div class="editor" id="ModalMirror">`+description+`
         </div>
       </div>
     </div>
@@ -139,8 +148,8 @@ var elementHydra = elementHydraJson();
 var functionJson = [{
   "id": "source", "title":"Source", "data":
     [
-      { "id": "noise", "title": "Noise", "code":  elementHydra.noise.example[0].code },
-      { "id": "voronoi", "title": "Voronoi", "code":  elementHydra.voronoi.example[0].code },
+      { "id": "noise", "title": "Noise", "code":  elementHydra.noise.example[0].code, description: elementHydra.noise.description },
+      { "id": "voronoi", "title": "Voronoi", "code":  elementHydra.voronoi.example[0].code, description: elementHydra.voronoi.description },
       { "id": "osc", "title": "Osc", "code":  elementHydra.osc.example[0].code },
       { "id": "shape", "title": "Shape", "code":  elementHydra.shape.example[0].code },
       { "id": "gradient", "title": "Gradient", "code":  elementHydra.gradient.example[0].code },
@@ -241,8 +250,16 @@ var functionJson = [{
     ]
 }
 
-]
+]; 
 
+functionJson.forEach(element => {
+  element.data.forEach(element2 => {
+if(elementHydra[element2.id] && elementHydra[element2.id].description){
+  element2.description=elementHydra[element2.id].description;
+}
+  });
+});
+console.log(elementHydra["resetAudioAndSpeed"]);
 
 function initFunction() {
   var html = ``;
